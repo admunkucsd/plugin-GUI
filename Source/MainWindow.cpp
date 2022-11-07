@@ -25,6 +25,7 @@
 #include "Utils/OpenEphysHttpServer.h"
 #include "UI/UIComponent.h"
 #include "UI/EditorViewport.h"
+#include "Test/TestRunner.h"
 #include <stdio.h>
 
 
@@ -33,6 +34,11 @@ MainWindow::MainWindow(const File& fileToLoad)
 		Colour(Colours::black),
 		DocumentWindow::allButtons)
 {
+    LOGD("Starting Core Tests");
+    UnitTestRunner runner;
+    runner.setAssertOnFailure(true);
+    runner.runTestsInCategory("Core");
+    LOGD("Finished Core Tests");
     configsDir = CoreServices::getSavedStateDirectory();
 	if(!configsDir.getFullPathName().contains("plugin-GUI" + File::getSeparatorString() + "Build"))
 		configsDir = configsDir.getChildFile("configs-api" + String(PLUGIN_API_VER));

@@ -182,3 +182,8 @@ int DataBuffer::readAllFromBuffer (AudioBuffer<float>& data,
 
     return numItems;
 }
+
+int DataBuffer::getNumChans() {
+    return numChans;
+}
+

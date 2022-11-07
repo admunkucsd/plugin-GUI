@@ -79,6 +79,8 @@ public:
 
     /** Resizes the data buffer */
     void resize (int chans, int size);
+    
+    int getNumChans();
 
 
 private:
