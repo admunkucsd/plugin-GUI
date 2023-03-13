@@ -11,6 +11,10 @@ add_sources(${PLUGIN_NAME}
 	FilterEditor.cpp
 	FilterEditor.h
 	)
+ 
+ add_sources(${PLUGIN_NAME}_tests
+    test_main.cpp
+ )
 	
 #optional: create IDE groups
 #plugin_create_filters()
