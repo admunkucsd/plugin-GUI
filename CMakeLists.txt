@@ -53,35 +53,42 @@ else()
 endif()
 
 
+set(JUCE_SOURCE
+    ${JUCE_DIRECTORY}/AppConfig.h
+    ${JUCE_DIRECTORY}/JuceHeader.h
+    ${JUCE_DIRECTORY}/BinaryData.h
+    ${JUCE_DIRECTORY}/BinaryData.cpp
+    ${JUCE_DIRECTORY}/include_juce_audio_basics.${JUCE_FILES_EXTENSION}
+    ${JUCE_DIRECTORY}/include_juce_audio_devices.${JUCE_FILES_EXTENSION}
+    ${JUCE_DIRECTORY}/include_juce_audio_formats.${JUCE_FILES_EXTENSION}
+    ${JUCE_DIRECTORY}/include_juce_audio_processors.${JUCE_FILES_EXTENSION}
+    ${JUCE_DIRECTORY}/include_juce_audio_utils.${JUCE_FILES_EXTENSION}
+    ${JUCE_DIRECTORY}/include_juce_core.${JUCE_FILES_EXTENSION}
+    ${JUCE_DIRECTORY}/include_juce_cryptography.${JUCE_FILES_EXTENSION}
+    ${JUCE_DIRECTORY}/include_juce_data_structures.${JUCE_FILES_EXTENSION}
+    ${JUCE_DIRECTORY}/include_juce_events.${JUCE_FILES_EXTENSION}
+    ${JUCE_DIRECTORY}/include_juce_graphics.${JUCE_FILES_EXTENSION}
+    ${JUCE_DIRECTORY}/include_juce_gui_basics.${JUCE_FILES_EXTENSION}
+    ${JUCE_DIRECTORY}/include_juce_gui_extra.${JUCE_FILES_EXTENSION}
+    ${JUCE_DIRECTORY}/include_juce_opengl.${JUCE_FILES_EXTENSION}
+    ${JUCE_DIRECTORY}/include_juce_osc.cpp
+    ${JUCE_DIRECTORY}/include_juce_video.${JUCE_FILES_EXTENSION}
+)
+
 #create executable and add JUCE components
-add_executable(open-ephys
-	${JUCE_DIRECTORY}/AppConfig.h
-	${JUCE_DIRECTORY}/JuceHeader.h
-	${JUCE_DIRECTORY}/BinaryData.h
-	${JUCE_DIRECTORY}/BinaryData.cpp
-	${JUCE_DIRECTORY}/include_juce_audio_basics.${JUCE_FILES_EXTENSION}
-	${JUCE_DIRECTORY}/include_juce_audio_devices.${JUCE_FILES_EXTENSION}
-	${JUCE_DIRECTORY}/include_juce_audio_formats.${JUCE_FILES_EXTENSION}
-	${JUCE_DIRECTORY}/include_juce_audio_processors.${JUCE_FILES_EXTENSION}
-	${JUCE_DIRECTORY}/include_juce_audio_utils.${JUCE_FILES_EXTENSION}
-	${JUCE_DIRECTORY}/include_juce_core.${JUCE_FILES_EXTENSION}
-	${JUCE_DIRECTORY}/include_juce_cryptography.${JUCE_FILES_EXTENSION}
-	${JUCE_DIRECTORY}/include_juce_data_structures.${JUCE_FILES_EXTENSION}
-	${JUCE_DIRECTORY}/include_juce_events.${JUCE_FILES_EXTENSION}
-	${JUCE_DIRECTORY}/include_juce_graphics.${JUCE_FILES_EXTENSION}
-	${JUCE_DIRECTORY}/include_juce_gui_basics.${JUCE_FILES_EXTENSION}
-	${JUCE_DIRECTORY}/include_juce_gui_extra.${JUCE_FILES_EXTENSION}
-	${JUCE_DIRECTORY}/include_juce_opengl.${JUCE_FILES_EXTENSION}
-	${JUCE_DIRECTORY}/include_juce_osc.cpp
-	${JUCE_DIRECTORY}/include_juce_video.${JUCE_FILES_EXTENSION}
-	)
+add_executable(open-ephys ${JUCE_SOURCE})
  if(MSVC)
 	target_sources(open-ephys PRIVATE ${RESOURCES_DIRECTORY}/Build-files/resources.rc)
  endif()
 
+add_library(PLUGIN_API SHARED ${JUCE_SOURCE})
+
 
 target_include_directories(open-ephys PRIVATE ${JUCE_DIRECTORY} ${JUCE_DIRECTORY}/modules)
 target_compile_features(open-ephys PUBLIC cxx_auto_type cxx_generalized_initializers cxx_std_17)
+
+target_include_directories(PLUGIN_API PRIVATE ${JUCE_DIRECTORY} ${JUCE_DIRECTORY}/modules)
+target_compile_features(PLUGIN_API PUBLIC cxx_auto_type cxx_generalized_initializers cxx_std_17)
 
 file(GLOB _bitfiles "${RESOURCES_DIRECTORY}/Bitfiles/*.bit")
 file(GLOB _xmlfiles "${RESOURCES_DIRECTORY}/Configs/*.xml")
@@ -202,7 +209,9 @@ elseif(APPLE)
 		MACOSX_BUNDLE TRUE
 		)
 	target_compile_options(open-ephys PRIVATE -fPIC -Wpartial-availability -Wno-inconsistent-missing-override -rdynamic)
+    target_compile_options(PLUGIN_API PRIVATE -fPIC -Wpartial-availability -Wno-inconsistent-missing-override -rdynamic)
 	set_property(TARGET open-ephys APPEND_STRING PROPERTY LINK_FLAGS "-fPIC -rdynamic")
+    set_property(TARGET PLUGIN_API APPEND_STRING PROPERTY LINK_FLAGS "-fPIC -rdynamic")
 	target_link_libraries(open-ephys dl)
 	target_link_libraries(open-ephys
 		"-framework Accelerate"
@@ -226,6 +235,30 @@ elseif(APPLE)
 		"-framework Security"
 		"-framework WebKit"
 	)
+ 
+    target_link_libraries(PLUGIN_API dl)
+    target_link_libraries(PLUGIN_API
+        "-framework Accelerate"
+        "-framework AudioToolbox"
+        "-framework AVKit"
+        "-framework AVFoundation"
+        "-framework Carbon"
+        "-framework Cocoa"
+        "-framework CoreAudio"
+        "-framework CoreAudioKit"
+        "-framework CoreMedia"
+        "-framework CoreMIDI"
+        "-framework DiscRecording"
+        "-framework Foundation"
+        "-framework IOKit"
+        "-framework Metal"
+        "-framework MetalKit"
+        "-framework OpenGL"
+        "-framework QTKit"
+        "-framework QuartzCore"
+        "-framework Security"
+        "-framework WebKit"
+    )
 
 	set_target_properties(open-ephys PROPERTIES
 		XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY ""
@@ -243,6 +276,8 @@ elseif(APPLE)
 		)
 		set_source_files_properties(${MAC_RESOURCE_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
 		target_sources(open-ephys PRIVATE ${MAC_RESOURCE_FILES})
+        target_sources(PLUGIN_API PRIVATE ${MAC_RESOURCE_FILES})
+
 
 else()
 	message( FATAL_ERROR "Unsupported OS")
@@ -260,6 +295,11 @@ foreach( src_file IN ITEMS ${SRC_FILES})
 	string(REPLACE "/" "\\" group_name "${src_path_rel}")
 	source_group("${group_name}" FILES "${src_file}")
 endforeach()
+
+#remove Main.cpp from open_ephys sources and add to API library
+list(REMOVE_ITEM SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/Source/Main.cpp)
+target_compile_definitions(PLUGIN_API PRIVATE JUCE_DISABLE_JUCE_VERSION_PRINTING=1 JUCE_CHECK_MEMORY_LEAKS=0)
+target_sources(PLUGIN_API PUBLIC ${SRC_FILES})
 
 #Add plugin build files
 add_subdirectory(Plugins)
