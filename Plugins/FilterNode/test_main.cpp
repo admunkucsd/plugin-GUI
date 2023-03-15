@@ -9,5 +9,6 @@
 #include <iostream>
 
 int main(int argc, char** argv) {
-    std::cout<<"h w" << std::endl;
+    std::cout << "hello world" << std::endl;
+    return 0;
 }
