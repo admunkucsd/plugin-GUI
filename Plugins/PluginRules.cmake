@@ -63,7 +63,7 @@ endif()
 
 
 add_dependencies(${PLUGIN_NAME}_tests ${PLUGIN_NAME} PLUGIN_API)
-target_link_libraries(${PLUGIN_NAME}_tests PRIVATE ${PLUGIN_NAME} gtest gtest_main PLUGIN_API)
+target_link_libraries(${PLUGIN_NAME}_tests PRIVATE ${PLUGIN_NAME} gtest_main PLUGIN_API)
 target_include_directories(${PLUGIN_NAME}_tests PRIVATE ${JUCE_DIRECTORY} ${JUCE_DIRECTORY}/modules ${PLUGIN_HEADER_PATH})
 add_test(NAME ${PLUGIN_NAME}_tests  COMMAND ${PLUGIN_NAME}_tests)
 

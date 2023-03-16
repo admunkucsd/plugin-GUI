@@ -13,7 +13,7 @@ add_sources(${PLUGIN_NAME}
 	)
  
  add_sources(${PLUGIN_NAME}_tests
-    test_main.cpp
+    FilterNodeTests.cpp
  )
 	
 #optional: create IDE groups
