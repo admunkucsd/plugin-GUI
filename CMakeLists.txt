@@ -81,14 +81,16 @@ add_executable(open-ephys ${JUCE_SOURCE})
 	target_sources(open-ephys PRIVATE ${RESOURCES_DIRECTORY}/Build-files/resources.rc)
  endif()
 
-add_library(PLUGIN_API SHARED ${JUCE_SOURCE})
 
 
 target_include_directories(open-ephys PRIVATE ${JUCE_DIRECTORY} ${JUCE_DIRECTORY}/modules)
 target_compile_features(open-ephys PUBLIC cxx_auto_type cxx_generalized_initializers cxx_std_17)
 
+if(BUILD_TESTS)
+add_library(PLUGIN_API SHARED ${JUCE_SOURCE})
 target_include_directories(PLUGIN_API PRIVATE ${JUCE_DIRECTORY} ${JUCE_DIRECTORY}/modules)
 target_compile_features(PLUGIN_API PUBLIC cxx_auto_type cxx_generalized_initializers cxx_std_17)
+endif()
 
 file(GLOB _bitfiles "${RESOURCES_DIRECTORY}/Bitfiles/*.bit")
 file(GLOB _xmlfiles "${RESOURCES_DIRECTORY}/Configs/*.xml")
@@ -209,9 +211,7 @@ elseif(APPLE)
 		MACOSX_BUNDLE TRUE
 		)
 	target_compile_options(open-ephys PRIVATE -fPIC -Wpartial-availability -Wno-inconsistent-missing-override -rdynamic)
-    target_compile_options(PLUGIN_API PRIVATE -fPIC -Wpartial-availability -Wno-inconsistent-missing-override -rdynamic)
 	set_property(TARGET open-ephys APPEND_STRING PROPERTY LINK_FLAGS "-fPIC -rdynamic")
-    set_property(TARGET PLUGIN_API APPEND_STRING PROPERTY LINK_FLAGS "-fPIC -rdynamic")
 	target_link_libraries(open-ephys dl)
 	target_link_libraries(open-ephys
 		"-framework Accelerate"
@@ -235,8 +235,7 @@ elseif(APPLE)
 		"-framework Security"
 		"-framework WebKit"
 	)
- 
-    target_link_libraries(PLUGIN_API dl)
+if(BUILD_TESTS)
     target_link_libraries(PLUGIN_API
         "-framework Accelerate"
         "-framework AudioToolbox"
@@ -259,7 +258,7 @@ elseif(APPLE)
         "-framework Security"
         "-framework WebKit"
     )
-
+endif()
 	set_target_properties(open-ephys PROPERTIES
 		XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY ""
 		XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED NO
@@ -276,7 +275,6 @@ elseif(APPLE)
 		)
 		set_source_files_properties(${MAC_RESOURCE_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
 		target_sources(open-ephys PRIVATE ${MAC_RESOURCE_FILES})
-        target_sources(PLUGIN_API PRIVATE ${MAC_RESOURCE_FILES})
 
 
 else()
@@ -298,8 +296,14 @@ endforeach()
 
 #remove Main.cpp from open_ephys sources and add to API library
 list(REMOVE_ITEM SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/Source/Main.cpp)
-target_compile_definitions(PLUGIN_API PRIVATE JUCE_DISABLE_JUCE_VERSION_PRINTING=1 JUCE_CHECK_MEMORY_LEAKS=0)
-target_sources(PLUGIN_API PUBLIC ${SRC_FILES})
+list(REMOVE_ITEM SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/Source/Processors/GenericProcessor.cpp)
+list(REMOVE_ITEM SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/Source/Processors/DataThreads/DataThread.cpp)
+
+
+if(BUILD_TESTS)
+target_sources(PLUGIN_API PRIVATE ${SRC_FILES})
+target_sources(PLUGIN_API PUBLIC  ${CMAKE_CURRENT_SOURCE_DIR}/Source/Processors/GenericProcessor/GenericProcessor.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Source/Processors/DataThreads/DataThread.cpp)
+endif()
 
 #Add plugin build files
 add_subdirectory(Plugins)

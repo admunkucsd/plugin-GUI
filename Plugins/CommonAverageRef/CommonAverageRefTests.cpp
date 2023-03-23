@@ -9,15 +9,14 @@
 
 #include "gtest/gtest.h"
 
-#include "FilterNode.h"
-#include <ProcessorHeaders.h>
+#include "CommonAverageRef.h"
 
-class FilterNodeTests : public ::testing::Test {
+class CommonAverageRefTest : public ::testing::Test {
  protected:
-    FilterNodeTests() {
+    CommonAverageRefTest() {
     }
 
-    ~FilterNodeTests() override {
+    ~CommonAverageRefTest() override {
     }
 
     void SetUp() override {
@@ -31,8 +30,9 @@ class FilterNodeTests : public ::testing::Test {
 };
 
 
-TEST(FilterNodeTest, ContructorTest) {
-    FilterNode* uut = new FilterNode();
+
+TEST(CommonAverageRefTest, ContructorTest) {
+    CommonAverageRef* uut = new CommonAverageRef();
     
     ASSERT_EQ(uut -> getDisplayName(), "Bandpass Filter");
     
