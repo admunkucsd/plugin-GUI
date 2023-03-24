@@ -9,11 +9,11 @@
 
 #include "gtest/gtest.h"
 
-#include "FilterNode.h"
+#include "../FilterNode.h"
 #include <ProcessorHeaders.h>
 
 class FilterNodeTests : public ::testing::Test {
- protected:
+protected:
     FilterNodeTests() {
     }
 

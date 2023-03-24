@@ -72,6 +72,9 @@ if(BUILD_TESTS)
 	target_link_libraries(${PLUGIN_NAME}_tests PRIVATE ${PLUGIN_NAME} gtest_main PLUGIN_API)
 	target_include_directories(${PLUGIN_NAME}_tests PRIVATE ${JUCE_DIRECTORY} ${JUCE_DIRECTORY}/modules ${PLUGIN_HEADER_PATH})
 	add_test(NAME ${PLUGIN_NAME}_tests  COMMAND ${PLUGIN_NAME}_tests)
+
+	get_target_property(PLUGIN_BASES PLUGIN_API SOURCES)
+	source_group("Plugin Base Classes" FILES ${PLUGIN_BASES})
 endif()
 #output folders
 set_property(TARGET ${PLUGIN_NAME} PROPERTY RUNTIME_OUTPUT_DIRECTORY ${BIN_PLUGIN_DIR})
