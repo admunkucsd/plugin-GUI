@@ -12,23 +12,23 @@
 #include "../FilterNode.h"
 #include <ProcessorHeaders.h>
 
-class FilterNodeTests : public ::testing::Test {
-protected:
-    FilterNodeTests() {
-    }
-
-    ~FilterNodeTests() override {
-    }
-
-    void SetUp() override {
-
-    }
-
-    void TearDown() override {
-
-    }
-
-};
+//class FilterNodeTests : public ::testing::Test {
+//protected:
+//    FilterNodeTests() {
+//    }
+//
+//    ~FilterNodeTests() override {
+//    }
+//
+//    void SetUp() override {
+//
+//    }
+//
+//    void TearDown() override {
+//
+//    }
+//
+//};
 
 
 TEST(FilterNodeTest, ContructorTest) {
@@ -39,3 +39,10 @@ TEST(FilterNodeTest, ContructorTest) {
     delete uut;
 }
 
+//TEST(FilterNodeTest, ProcessTets) {
+//    FilterNode* uut = new FilterNode();
+//    
+//    ASSERT_EQ(uut -> getDisplayName(), "Bandpass Filter");
+//    
+//    delete uut;
+//}

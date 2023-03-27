@@ -307,3 +307,8 @@ endif()
 
 #Add plugin build files
 add_subdirectory(Plugins)
+
+if(BUILD_TESTS)
+set(SOURCE_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/Source)
+add_subdirectory(Tests)
+endif()

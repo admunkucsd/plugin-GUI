@@ -1,0 +1,30 @@
+#common options for default plug-ins
+unset(PROJECT_FOLDER)
+unset(COMPONENT_NAME)
+set(INSTALL_GTEST OFF)
+get_filename_component(PROJECT_FOLDER ${CMAKE_CURRENT_SOURCE_DIR} ABSOLUTE)
+get_filename_component(COMPONENT_NAME ${PROJECT_FOLDER} NAME)
+
+include(FetchContent)
+FetchContent_Declare(
+		googletest
+		GIT_REPOSITORY    https://github.com/google/googletest.git
+		GIT_TAG           release-1.12.1
+)
+
+FetchContent_MakeAvailable(googletest)
+enable_testing()
+
+add_executable(
+		${COMPONENT_NAME}_tests
+)
+target_compile_features(${COMPONENT_NAME}_tests PRIVATE cxx_std_17)
+
+
+add_dependencies(${COMPONENT_NAME}_tests PLUGIN_API)
+target_link_libraries(${COMPONENT_NAME}_tests PRIVATE gtest_main PLUGIN_API)
+target_include_directories(${COMPONENT_NAME}_tests PRIVATE ${JUCE_DIRECTORY} ${JUCE_DIRECTORY}/modules)
+add_test(NAME ${COMPONENT_NAME}_tests  COMMAND ${COMPONENT_NAME}_tests)
+
+get_target_property(PLUGIN_BASES PLUGIN_API SOURCES)
+source_group("Plugin Base Classes" FILES ${PLUGIN_BASES})
