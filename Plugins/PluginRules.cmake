@@ -30,9 +30,10 @@ if(BUILD_TESTS)
 			${PLUGIN_NAME}_tests
 	)
 	target_compile_features(${PLUGIN_NAME}_tests PRIVATE cxx_std_17)
+else()
+	add_dependencies(${PLUGIN_NAME} open-ephys)
 endif()
 
-add_dependencies(${PLUGIN_NAME} open-ephys)
 target_include_directories(${PLUGIN_NAME} PRIVATE ${JUCE_DIRECTORY} ${JUCE_DIRECTORY}/modules ${PLUGIN_HEADER_PATH})
 target_compile_features(${PLUGIN_NAME} PUBLIC cxx_auto_type cxx_generalized_initializers)
 
@@ -69,7 +70,7 @@ endif()
 
 if(BUILD_TESTS)
 	add_dependencies(${PLUGIN_NAME}_tests ${PLUGIN_NAME} PLUGIN_API)
-	target_link_libraries(${PLUGIN_NAME}_tests PRIVATE ${PLUGIN_NAME} gtest_main PLUGIN_API)
+	target_link_libraries(${PLUGIN_NAME}_tests PRIVATE ${PLUGIN_NAME} gtest_main PUBLIC PLUGIN_API)
 	target_include_directories(${PLUGIN_NAME}_tests PRIVATE ${JUCE_DIRECTORY} ${JUCE_DIRECTORY}/modules ${PLUGIN_HEADER_PATH})
 	add_test(NAME ${PLUGIN_NAME}_tests  COMMAND ${PLUGIN_NAME}_tests)
 

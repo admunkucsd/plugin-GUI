@@ -296,13 +296,10 @@ endforeach()
 
 #remove Main.cpp from open_ephys sources and add to API library
 list(REMOVE_ITEM SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/Source/Main.cpp)
-list(REMOVE_ITEM SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/Source/Processors/GenericProcessor.cpp)
-list(REMOVE_ITEM SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/Source/Processors/DataThreads/DataThread.cpp)
 
 
 if(BUILD_TESTS)
 target_sources(PLUGIN_API PRIVATE ${SRC_FILES})
-target_sources(PLUGIN_API PUBLIC  ${CMAKE_CURRENT_SOURCE_DIR}/Source/Processors/GenericProcessor/GenericProcessor.cpp ${CMAKE_CURRENT_SOURCE_DIR}/Source/Processors/DataThreads/DataThread.cpp)
 endif()
 
 #Add plugin build files
