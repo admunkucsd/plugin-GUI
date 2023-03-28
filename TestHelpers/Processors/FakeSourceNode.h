@@ -1,13 +1,18 @@
 #ifndef FAKESOURCENODE_H
 #define FAKESOURCENODE_H
 
-class FakeSourceNode {
+#include <ProcessorHeaders.h>
+
+class FakeSourceNode : public GenericProcessor {
 public:
     FakeSourceNode();
-
-    int getValue();
+    
+    void addMessageChannel();
+    void addTestDataStreams();
+    
+    void process(AudioBuffer<float>& continuousBuffer) override;
+    
 private:
-    int value;
 };
 
 

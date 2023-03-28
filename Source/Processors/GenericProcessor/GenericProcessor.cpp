@@ -832,10 +832,10 @@ void GenericProcessor::update()
             int continuousChannelGlobalIndex = 0;
 
             // copy settings from source node
-            messageChannel.reset();
-            messageChannel = std::make_unique<EventChannel>(*sourceNode->getMessageChannel());
-            messageChannel->addProcessor(processorInfo.get());
-            messageChannel->setDataStream(AccessClass::getMessageCenter()->getMessageStream());
+//            messageChannel.reset();
+//            messageChannel = std::make_unique<EventChannel>(*sourceNode->getMessageChannel());
+//            messageChannel->addProcessor(processorInfo.get());
+//            messageChannel->setDataStream(AccessClass::getMessageCenter()->getMessageStream());
 
             if (sourceNode->isSplitter())
             {
@@ -1046,6 +1046,7 @@ void GenericProcessor::update()
           {
               if (param->getType() == Parameter::SELECTED_CHANNELS_PARAM)
               {
+                   
                    
                  SelectedChannelsParameter* p = (SelectedChannelsParameter*) spikeChannel->getParameter(param->getName());
                      

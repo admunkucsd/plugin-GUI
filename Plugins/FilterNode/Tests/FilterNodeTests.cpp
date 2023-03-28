@@ -34,9 +34,16 @@
 
 TEST(FilterNodeTest, ContructorTest) {
     FilterNode* uut = new FilterNode();
-    FakeSourceNode fake;
+    FakeSourceNode* fake = new FakeSourceNode();
+    
+    fake->addTestDataStreams();
+    
+    uut->setSourceNode(fake);
+    uut->update();
+    
     ASSERT_EQ(uut -> getDisplayName(), "Bandpass Filter");
     delete uut;
+    delete fake;
 }
 
 //TEST(FilterNodeTest, ProcessTets) {
