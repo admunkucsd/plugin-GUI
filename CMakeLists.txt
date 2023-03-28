@@ -32,6 +32,9 @@ set(BASE_BUILD_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/Build)
 set(JUCE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/JuceLibraryCode)
 set(RESOURCES_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/Resources)
 
+set(SOURCE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/Source)
+set(TEST_HELPERS_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/TestHelpers)
+
 configure_file(${JUCE_DIRECTORY}/JuceHeader.h.in ${JUCE_DIRECTORY}/JuceHeader.h)
 configure_file(${RESOURCES_DIRECTORY}/Build-files/resources.rc.in ${RESOURCES_DIRECTORY}/Build-files/resources.rc)
 
@@ -305,7 +308,8 @@ endif()
 #Add plugin build files
 add_subdirectory(Plugins)
 
+
 if(BUILD_TESTS)
-set(SOURCE_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/Source)
+add_subdirectory(TestHelpers)
 add_subdirectory(Tests)
 endif()
