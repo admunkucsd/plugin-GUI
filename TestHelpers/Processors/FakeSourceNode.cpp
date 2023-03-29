@@ -4,7 +4,6 @@ FakeSourceNode::FakeSourceNode() : GenericProcessor("Fake Source Node"){}
 
 void FakeSourceNode::addMessageChannel() {
     
-//messageChannel = new EventChannel()
 }
 
 void FakeSourceNode::addTestDataStreams() {

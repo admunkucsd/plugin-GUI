@@ -94,6 +94,8 @@ PluginManager* getPluginManager();
 /** Retursn a pointer to the */
 ActionBroadcaster* getBroadcaster();
 
+void setMessageCenter(MessageCenter * mc_);
+
 void shutdownBroadcaster();
 
 //Methods to access some private members of GenericProcessors.

@@ -159,4 +159,11 @@ MidiBuffer* ExternalProcessorAccessor::getMidiBuffer(GenericProcessor* proc)
 	return proc->m_currentMidiBuffer;
 }
 
+
+//**Set the MessageCenter for testing only**//
+void setMessageCenter(MessageCenter * mc_){
+    if(pg != nullptr) return;
+    mc = mc_;
+}
+
 }

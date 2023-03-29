@@ -10,3 +10,4 @@ target_link_libraries(test_helpers PRIVATE PLUGIN_API)
 
 
 add_subdirectory(Processors)
+add_subdirectory(Application)

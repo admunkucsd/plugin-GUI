@@ -2,6 +2,7 @@
 #define FAKESOURCENODE_H
 
 #include <ProcessorHeaders.h>
+#include <NonAPIHeaders.h>
 
 class FakeSourceNode : public GenericProcessor {
 public:

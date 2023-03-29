@@ -11,7 +11,8 @@
 
 #include "../FilterNode.h"
 #include <ProcessorHeaders.h>
-#include <FakeProcessors.h>
+#include <ModelProcessors.h>
+#include <ModelApplication.h>
 
 //class FilterNodeTests : public ::testing::Test {
 //protected:
@@ -35,8 +36,10 @@
 TEST(FilterNodeTest, ContructorTest) {
     FilterNode* uut = new FilterNode();
     FakeSourceNode* fake = new FakeSourceNode();
-    
+    StubAccessClass* sAC = new StubAccessClass();
+    sAC->addMessageCenter();
     fake->addTestDataStreams();
+    fake->update();
     
     uut->setSourceNode(fake);
     uut->update();
@@ -44,6 +47,7 @@ TEST(FilterNodeTest, ContructorTest) {
     ASSERT_EQ(uut -> getDisplayName(), "Bandpass Filter");
     delete uut;
     delete fake;
+    delete sAC;
 }
 
 //TEST(FilterNodeTest, ProcessTets) {
