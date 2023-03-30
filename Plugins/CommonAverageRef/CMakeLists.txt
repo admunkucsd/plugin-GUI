@@ -12,9 +12,9 @@ add_sources(${PLUGIN_NAME}
 	CommonAverageRefEditor.h
 	)
 
-#add_sources(${PLUGIN_NAME}_tests
-#	CommonAverageRefTests.cpp
-#	)
+if(BUILD_TESTS)
+    add_subdirectory(Tests)
+endif()
 	
 #optional: create IDE groups
 #plugin_create_filters()

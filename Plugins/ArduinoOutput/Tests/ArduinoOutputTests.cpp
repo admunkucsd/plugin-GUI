@@ -2,18 +2,18 @@
 
 #include "gtest/gtest.h"
 
-#include "../CommonAverageRef.h"
+#include "../ArduinoOutput.h"
 #include <ProcessorHeaders.h>
 #include <ModelProcessors.h>
 #include <ModelApplication.h>
 #include <TestFixtures.h>
 
-class CommonAverageRefTests : public ProcessorTest {
+class ArduinoOutputTests : public ProcessorTest {
 protected:
-    CommonAverageRefTests() : ProcessorTest(1, 150) {
+    ArduinoOutputTests() : ProcessorTest(1, 150) {
     }
 
-    ~CommonAverageRefTests() override {
+    ~ArduinoOutputTests() override {
     }
 
     void SetUp() override {

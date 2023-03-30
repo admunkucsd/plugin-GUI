@@ -58,6 +58,14 @@ protected:
         lowCut -> currentValue = value;
         uut->parameterChangeRequest(lowCut);
     }
+    
+    void dumpAllSamples() {
+            for(int i = 0; i < signal -> getNumSamples(); i++) {
+                for(int j = 0; j < signal -> getNumChannels(); j++) {
+                    std::cout << signal -> getSample(j, i) << std::endl;
+                }
+            }
+    }
 
 };
 

@@ -2,18 +2,18 @@
 
 #include "gtest/gtest.h"
 
-#include "../CommonAverageRef.h"
+#include "../SpikeDisplayNode/SpikeDisplayNode.h"
 #include <ProcessorHeaders.h>
 #include <ModelProcessors.h>
 #include <ModelApplication.h>
 #include <TestFixtures.h>
 
-class CommonAverageRefTests : public ProcessorTest {
+class SpikeDetectorNodeTests : public ProcessorTest {
 protected:
-    CommonAverageRefTests() : ProcessorTest(1, 150) {
+    SpikeDetectorNodeTests() : ProcessorTest(1, 150) {
     }
 
-    ~CommonAverageRefTests() override {
+    ~SpikeDetectorNodeTests() override {
     }
 
     void SetUp() override {

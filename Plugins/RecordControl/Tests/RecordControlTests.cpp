@@ -2,18 +2,18 @@
 
 #include "gtest/gtest.h"
 
-#include "../CommonAverageRef.h"
+#include "../RecordControl.h"
 #include <ProcessorHeaders.h>
 #include <ModelProcessors.h>
 #include <ModelApplication.h>
 #include <TestFixtures.h>
 
-class CommonAverageRefTests : public ProcessorTest {
+class RecordControlTests : public ProcessorTest {
 protected:
-    CommonAverageRefTests() : ProcessorTest(1, 150) {
+    RecordControlTests() : ProcessorTest(1, 150) {
     }
 
-    ~CommonAverageRefTests() override {
+    ~RecordControlTests() override {
     }
 
     void SetUp() override {
