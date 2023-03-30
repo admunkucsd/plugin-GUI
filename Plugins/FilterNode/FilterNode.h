@@ -67,7 +67,7 @@ class FilterNode : public GenericProcessor
 public:
 
     /** The class constructor, used to initialize any members. */
-    FilterNode();
+    FilterNode(bool headless = false);
 
     /** The class destructor, used to deallocate memory. */
     ~FilterNode() { }

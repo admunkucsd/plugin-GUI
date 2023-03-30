@@ -1,6 +1,6 @@
 #include "FakeSourceNode.h"
 
-FakeSourceNode::FakeSourceNode() : GenericProcessor("Fake Source Node"){}
+FakeSourceNode::FakeSourceNode(int channels, float sampleRate) : GenericProcessor("Fake Source Node"), channels(channels), sampleRate(sampleRate){}
 
 void FakeSourceNode::addMessageChannel() {
     
@@ -12,12 +12,12 @@ void FakeSourceNode::addTestDataStreams() {
         "FakeSourceNode",
         "description",
         "identifier",
-        20000
+        sampleRate
     };
     
     dataStreams.add(new DataStream(settings));
     
-    for (int index= 0; index < 4; index++)
+    for (int index= 0; index < channels; index++)
     {
         
         ContinuousChannel::Settings settings{

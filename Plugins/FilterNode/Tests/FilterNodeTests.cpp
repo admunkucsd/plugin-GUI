@@ -13,47 +13,65 @@
 #include <ProcessorHeaders.h>
 #include <ModelProcessors.h>
 #include <ModelApplication.h>
+#include <TestFixtures.h>
+#include <cmath>
+class FilterNodeTests : public ProcessorTest {
+protected:
+    FilterNodeTests() : ProcessorTest(1, 150) {
+        uut = std::make_unique<FilterNode>(true);
+    }
 
-//class FilterNodeTests : public ::testing::Test {
-//protected:
-//    FilterNodeTests() {
-//    }
-//
-//    ~FilterNodeTests() override {
-//    }
-//
-//    void SetUp() override {
-//
-//    }
-//
-//    void TearDown() override {
-//
-//    }
-//
-//};
+    ~FilterNodeTests() override {
+    }
 
+    void SetUp() override {
+        ProcessorTest::SetUp();
+        uut->setSourceNode(sn.get());
+        uut->update();
+    }
 
-TEST(FilterNodeTest, ContructorTest) {
-    FilterNode* uut = new FilterNode();
-    FakeSourceNode* fake = new FakeSourceNode();
-    StubAccessClass* sAC = new StubAccessClass();
-    sAC->addMessageCenter();
-    fake->addTestDataStreams();
-    fake->update();
+    void TearDown() override {
+        ProcessorTest::TearDown();
+
+    }
     
-    uut->setSourceNode(fake);
-    uut->update();
+    std::unique_ptr<FilterNode> uut;
+    std::unique_ptr<AudioBuffer<float>> signal;
     
+    void buildSineWave(int frequency){
+        const DataStream* stream = uut -> getDataStreams().getFirst();
+        signal = std::make_unique<AudioBuffer<float>>(stream->getContinuousChannels().size(), frequency);
+        for(int i = 0; i < frequency; i++){
+            signal -> addSample(0, i, 10*sin((2*3.1415*i)/frequency));
+        }
+    }
+    
+    void setHighCut(float value){
+        Parameter* highCut = uut->getParameter("high_cut");
+        highCut -> currentValue = value;
+        uut->parameterChangeRequest(highCut);
+    }
+    
+    void setLowCut(float value){
+        uint16 streamId = uut->getDataStreams().getFirst()->getStreamId();
+        Parameter* lowCut = uut->getParameter("low_cut");
+        lowCut -> currentValue = value;
+        uut->parameterChangeRequest(lowCut);
+    }
+
+};
+
+TEST_F(FilterNodeTests, ContructorTest) {
     ASSERT_EQ(uut -> getDisplayName(), "Bandpass Filter");
-    delete uut;
-    delete fake;
-    delete sAC;
 }
 
-//TEST(FilterNodeTest, ProcessTets) {
-//    FilterNode* uut = new FilterNode();
-//    
-//    ASSERT_EQ(uut -> getDisplayName(), "Bandpass Filter");
-//    
-//    delete uut;
-//}
+TEST_F(FilterNodeTests, CutoffTest) {
+    buildSineWave(150);
+
+    setHighCut(60);
+    setLowCut(10);
+    AccessClass::ExternalProcessorAccessor::injectNumSamples(uut.get(), uut -> getDataStreams().getFirst() -> getStreamId(), 150);
+    uut->process(*(signal.get()));
+
+    
+}

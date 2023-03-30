@@ -6,7 +6,7 @@
 
 class FakeSourceNode : public GenericProcessor {
 public:
-    FakeSourceNode();
+    FakeSourceNode(int channels = 1, float sampleRate = 20000.0f);
     
     void addMessageChannel();
     void addTestDataStreams();
@@ -14,6 +14,8 @@ public:
     void process(AudioBuffer<float>& continuousBuffer) override;
     
 private:
+    int channels;
+    float sampleRate;
 };
 
 
