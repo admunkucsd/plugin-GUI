@@ -94,6 +94,13 @@ add_library(PLUGIN_API SHARED ${JUCE_SOURCE})
 set_property(TARGET PLUGIN_API APPEND PROPERTY COMPILE_DEFINITIONS "JUCE_API=__declspec(dllexport)")
 target_include_directories(PLUGIN_API PRIVATE ${JUCE_DIRECTORY} ${JUCE_DIRECTORY}/modules)
 target_compile_features(PLUGIN_API PUBLIC cxx_auto_type cxx_generalized_initializers cxx_std_17)
+
+
+set(BIN_TESTS_DIR ${CMAKE_BINARY_DIR}/TestBin)
+
+add_custom_command(TARGET PLUGIN_API POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_TESTS_DIR}"
+		)
 endif()
 
 file(GLOB _bitfiles "${RESOURCES_DIRECTORY}/Bitfiles/*.bit")
@@ -304,6 +311,10 @@ list(REMOVE_ITEM SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/Source/Main.cpp)
 
 if(BUILD_TESTS)
 target_sources(PLUGIN_API PRIVATE ${SRC_FILES})
+set_target_properties( PLUGIN_API PROPERTIES RUNTIME_OUTPUT_DIRECTORY 
+	${BIN_TESTS_DIR}/common )
+set_target_properties( PLUGIN_API PROPERTIES LIBRARY_OUTPUT_DIRECTORY
+	${BIN_TEST_DIR}/common )
 endif()
 
 #Add plugin build files

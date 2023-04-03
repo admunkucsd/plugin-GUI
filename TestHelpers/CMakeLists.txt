@@ -8,6 +8,8 @@ add_dependencies(test_helpers PLUGIN_API)
 target_include_directories(test_helpers PRIVATE ${JUCE_DIRECTORY} ${JUCE_DIRECTORY}/modules ${PLUGINS_DIRECTORY}/Headers include)
 target_link_libraries(test_helpers PRIVATE PLUGIN_API)
 
+set_property(TARGET test_helpers PROPERTY RUNTIME_OUTPUT_DIRECTORY ${BIN_TESTS_DIR}/common)
+set_property(TARGET test_helpers PROPERTY LIBRARY_OUTPUT_DIRECTORY ${BIN_TESTS_DIR}/common)
 
 add_subdirectory(Processors)
 add_subdirectory(Application)
