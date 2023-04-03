@@ -25,18 +25,10 @@
 #define __ACCESSCLASS_H_CE1DC2DE__
 
 
-#ifdef _WIN32
-#ifdef OEPLUGIN
-#define PLUGIN_API __declspec(dllimport)
-#else
-#define PLUGIN_API __declspec(dllexport)
-#endif
-#else
-#define PLUGIN_API __attribute__((visibility("default")))
-#endif
-
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "TestableExport.h"
+
 
 class UIComponent;
 class EditorViewport;
@@ -106,7 +98,7 @@ PluginManager* getPluginManager();
 /** Retursn a pointer to the */
 ActionBroadcaster* getBroadcaster();
 
-void PLUGIN_API setMessageCenter(MessageCenter * mc_);
+void TESTABLE setMessageCenter(MessageCenter * mc_);
 
 void shutdownBroadcaster();
 
@@ -115,7 +107,7 @@ void shutdownBroadcaster();
 //used by various internal parts of the core GUI which need access
 //to those members, while keeping them inaccessible by normal plugins
 
-class PLUGIN_API ExternalProcessorAccessor
+class TESTABLE ExternalProcessorAccessor
 {
 
 public:

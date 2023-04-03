@@ -22,6 +22,7 @@ target_compile_features(${COMPONENT_NAME}_tests PRIVATE cxx_std_17)
 
 
 add_dependencies(${COMPONENT_NAME}_tests PLUGIN_API)
+target_compile_definitions(${COMPONENT_NAME}_tests PRIVATE -DTEST_RUNNER)
 target_link_libraries(${COMPONENT_NAME}_tests PRIVATE gtest_main PLUGIN_API)
 target_include_directories(${COMPONENT_NAME}_tests PRIVATE ${JUCE_DIRECTORY} ${JUCE_DIRECTORY}/modules)
 add_test(NAME ${COMPONENT_NAME}_tests  COMMAND ${COMPONENT_NAME}_tests)

@@ -24,16 +24,7 @@
 #ifndef __MESSAGECENTER_H_2695FC38__
 #define __MESSAGECENTER_H_2695FC38__
 
-#ifdef _WIN32
-#ifdef OEPLUGIN
-#define PLUGIN_API __declspec(dllimport)
-#else
-#define PLUGIN_API __declspec(dllexport)
-#endif
-#else
-#define PLUGIN_API __attribute__((visibility("default")))
-#endif
-
+#include "../../TestableExport.h"
 #include "../../../JuceLibraryCode/JuceHeader.h"
 #include <stdio.h>
 
@@ -53,7 +44,7 @@ class MessageCenterEditor;
 
 */
 
-class PLUGIN_API MessageCenter : public GenericProcessor,
+class TESTABLE MessageCenter : public GenericProcessor,
     public ActionListener
 
 {

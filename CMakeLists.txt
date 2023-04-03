@@ -90,15 +90,15 @@ target_include_directories(open-ephys PRIVATE ${JUCE_DIRECTORY} ${JUCE_DIRECTORY
 target_compile_features(open-ephys PUBLIC cxx_auto_type cxx_generalized_initializers cxx_std_17)
 
 if(BUILD_TESTS)
-add_library(PLUGIN_API SHARED ${JUCE_SOURCE})
-set_property(TARGET PLUGIN_API APPEND PROPERTY COMPILE_DEFINITIONS "JUCE_API=__declspec(dllexport)")
-target_include_directories(PLUGIN_API PRIVATE ${JUCE_DIRECTORY} ${JUCE_DIRECTORY}/modules)
-target_compile_features(PLUGIN_API PUBLIC cxx_auto_type cxx_generalized_initializers cxx_std_17)
+	add_definitions(-DBUILD_TESTS)
+	add_library(PLUGIN_API SHARED ${JUCE_SOURCE})
+	set_property(TARGET PLUGIN_API APPEND PROPERTY COMPILE_DEFINITIONS "JUCE_API=__declspec(dllexport)")
+	target_include_directories(PLUGIN_API PRIVATE ${JUCE_DIRECTORY} ${JUCE_DIRECTORY}/modules)
+	target_compile_features(PLUGIN_API PUBLIC cxx_auto_type cxx_generalized_initializers cxx_std_17)
 
+	set(BIN_TESTS_DIR ${CMAKE_BINARY_DIR}/TestBin)
 
-set(BIN_TESTS_DIR ${CMAKE_BINARY_DIR}/TestBin)
-
-add_custom_command(TARGET PLUGIN_API POST_BUILD
+	add_custom_command(TARGET PLUGIN_API POST_BUILD
 		COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_TESTS_DIR}"
 		)
 endif()
