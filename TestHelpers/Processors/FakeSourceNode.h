@@ -4,7 +4,7 @@
 #include <ProcessorHeaders.h>
 #include <NonAPIHeaders.h>
 
-class FakeSourceNode : public GenericProcessor {
+class TESTABLE FakeSourceNode : public GenericProcessor {
 public:
     FakeSourceNode(int channels = 1, float sampleRate = 20000.0f);
     

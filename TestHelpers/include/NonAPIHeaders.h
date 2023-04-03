@@ -5,6 +5,7 @@
 */
 
 #include "../../Source/AccessClass.h"
+#include "../../Source/TestableExport.h"
 
 #include "../../Source/Processors/MessageCenter/MessageCenter.h"
 #include "../../Source/Processors/MessageCenter/MessageCenterEditor.h"

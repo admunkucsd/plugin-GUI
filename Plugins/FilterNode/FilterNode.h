@@ -62,7 +62,7 @@ public:
 
     @see GenericProcessor, FilterEditor
 */
-class FilterNode : public GenericProcessor
+class TESTABLE FilterNode : public GenericProcessor
 {
 public:
 

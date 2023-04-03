@@ -91,6 +91,7 @@ target_compile_features(open-ephys PUBLIC cxx_auto_type cxx_generalized_initiali
 
 if(BUILD_TESTS)
 add_library(PLUGIN_API SHARED ${JUCE_SOURCE})
+set_property(TARGET PLUGIN_API APPEND PROPERTY COMPILE_DEFINITIONS "JUCE_API=__declspec(dllexport)")
 target_include_directories(PLUGIN_API PRIVATE ${JUCE_DIRECTORY} ${JUCE_DIRECTORY}/modules)
 target_compile_features(PLUGIN_API PUBLIC cxx_auto_type cxx_generalized_initializers cxx_std_17)
 endif()

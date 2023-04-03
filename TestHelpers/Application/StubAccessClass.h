@@ -3,7 +3,7 @@
 
 #include <NonAPIHeaders.h>
 
-class StubAccessClass {
+class TESTABLE StubAccessClass {
 public:
     void addMessageCenter();
 private:

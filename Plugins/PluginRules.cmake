@@ -30,6 +30,7 @@ if(BUILD_TESTS)
 			${PLUGIN_NAME}_tests
 	)
 	target_compile_features(${PLUGIN_NAME}_tests PRIVATE cxx_std_17)
+	add_dependencies(${PLUGIN_NAME} PLUGIN_API)
 else()
 	add_dependencies(${PLUGIN_NAME} open-ephys)
 endif()
@@ -42,7 +43,7 @@ target_compile_features(${PLUGIN_NAME} PRIVATE cxx_std_17)
 
 #Libraries and compiler options
 if(MSVC)
-	target_link_libraries(${PLUGIN_NAME} $<TARGET_FILE_DIR:open-ephys>/open-ephys.lib)
+	target_link_libraries(${PLUGIN_NAME} PLUGIN_API $<TARGET_FILE_DIR:open-ephys>/open-ephys.lib)
 	target_compile_options(${PLUGIN_NAME} PRIVATE /sdl- /W0)
 elseif(LINUX)
 	target_link_libraries(${PLUGIN_NAME} GL X11 Xext Xinerama asound dl freetype pthread rt)
