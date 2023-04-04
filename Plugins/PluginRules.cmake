@@ -43,7 +43,7 @@ target_compile_features(${PLUGIN_NAME} PRIVATE cxx_std_17)
 #Libraries and compiler options
 if(MSVC)
 	if(BUILD_TESTS)
- 		target_link_libraries(${PLUGIN_NAME} PLUGIN_API)
+ 		target_link_libraries(${PLUGIN_NAME} gui_testable_source)
  	else()
  		target_link_libraries(${PLUGIN_NAME} $<TARGET_FILE_DIR:open-ephys>/open-ephys.lib)
  	endif()	
