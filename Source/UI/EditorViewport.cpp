@@ -1475,8 +1475,8 @@ std::unique_ptr<XmlElement> EditorViewport::createSettingsXml()
 
 XmlElement* EditorViewport::createNodeXml(GenericProcessor* processor, bool isStartOfSignalChain)
 {
-    AccessClass::getProcessorGraph()->createNodeXml(processor, isStartOfSignalChain);
-    return nullptr;
+    XmlElement* node = AccessClass::getProcessorGraph()->createNodeXml(processor, isStartOfSignalChain);
+    return node;
 }
 
 
