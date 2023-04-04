@@ -91,14 +91,17 @@ target_compile_features(open-ephys PUBLIC cxx_auto_type cxx_generalized_initiali
 
 if(BUILD_TESTS)
 	add_definitions(-DBUILD_TESTS)
-	add_library(PLUGIN_API SHARED ${JUCE_SOURCE})
-	set_property(TARGET PLUGIN_API APPEND PROPERTY COMPILE_DEFINITIONS "JUCE_API=__declspec(dllexport)")
-	target_include_directories(PLUGIN_API PRIVATE ${JUCE_DIRECTORY} ${JUCE_DIRECTORY}/modules)
-	target_compile_features(PLUGIN_API PUBLIC cxx_auto_type cxx_generalized_initializers cxx_std_17)
+	add_library(gui_testable_source SHARED ${JUCE_SOURCE})
+	set_property(TARGET gui_testable_source APPEND PROPERTY COMPILE_DEFINITIONS "JUCE_API=__declspec(dllexport)")
+	target_include_directories(gui_testable_source PRIVATE ${JUCE_DIRECTORY} ${JUCE_DIRECTORY}/modules)
+	target_compile_features(gui_testable_source PUBLIC cxx_auto_type cxx_generalized_initializers cxx_std_17)
 
 	set(BIN_TESTS_DIR ${CMAKE_BINARY_DIR}/TestBin)
 
-	add_custom_command(TARGET PLUGIN_API POST_BUILD
+	set_target_properties( gui_testable_source PROPERTIES RUNTIME_OUTPUT_DIRECTORY  ${CMAKE_BINARY_DIR}/TestBin/common )
+	set_target_properties( gui_testable_source PROPERTIES LIBRARY_OUTPUT_DIRECTORY  ${CMAKE_BINARY_DIR}/TestBin/common )
+
+	add_custom_command(TARGET gui_testable_source POST_BUILD
 		COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_TESTS_DIR}"
 		)
 endif()
@@ -247,7 +250,7 @@ elseif(APPLE)
 		"-framework WebKit"
 	)
 if(BUILD_TESTS)
-    target_link_libraries(PLUGIN_API
+    target_link_libraries(gui_testable_source
         "-framework Accelerate"
         "-framework AudioToolbox"
         "-framework AVKit"
@@ -310,11 +313,7 @@ list(REMOVE_ITEM SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/Source/Main.cpp)
 
 
 if(BUILD_TESTS)
-target_sources(PLUGIN_API PRIVATE ${SRC_FILES})
-set_target_properties( PLUGIN_API PROPERTIES RUNTIME_OUTPUT_DIRECTORY 
-	${BIN_TESTS_DIR}/common )
-set_target_properties( PLUGIN_API PROPERTIES LIBRARY_OUTPUT_DIRECTORY
-	${BIN_TEST_DIR}/common )
+target_sources(gui_testable_source PRIVATE ${SRC_FILES})
 endif()
 
 #Add plugin build files
