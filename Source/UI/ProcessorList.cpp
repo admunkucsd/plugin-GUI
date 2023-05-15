@@ -53,7 +53,8 @@ ProcessorList::ProcessorList(Viewport* v) :
 	xBuffer(1),
     yBuffer(1),
     hoverItem(nullptr),
-    maximumNameOffset(0)
+    maximumNameOffset(0),
+    isSignalChainLocked(false)
 {
 
 	listFontLight = Font("CP Mono", "Light", 25);
@@ -109,7 +110,7 @@ void ProcessorList::timerCallback()
 
 bool ProcessorList::isOpen()
 {
-	return baseItem->isOpen();
+	return baseItem->isOpen() && !isSignalChainLocked;
 }
 
 void ProcessorList::paint(Graphics& g)
@@ -745,6 +746,11 @@ Plugin::Description ProcessorList::getItemDescriptionfromList(const String& name
 	}
 
 	return description;
+}
+
+void ProcessorList::setSignalChainLock(bool isLocked) {
+    isSignalChainLocked = isLocked;
+    AccessClass::getUIComponent()->childComponentChanged();
 }
 
 // ===================================================================

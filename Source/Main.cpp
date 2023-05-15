@@ -60,6 +60,7 @@ public:
         parameters.addTokens(commandLine, " ", "\"");
         parameters.removeEmptyStrings();
 
+        isUnlocked = false;
 #ifdef _WIN32
 
         if (AllocConsole())
@@ -89,28 +90,16 @@ public:
         {
             
             bool isConsoleApp = false;
-            File fileToLoad;
             
             for (auto param : parameters)
             {
                 if (param.equalsIgnoreCase("--headless"))
                     isConsoleApp = true;
-                
-                else
-                {
-                    File localPath(File::getCurrentWorkingDirectory().getChildFile(param));
-                    File globalPath(param);
-                    
-                    if (localPath.existsAsFile())
-                        fileToLoad = localPath;
-                    
-                    if (globalPath.existsAsFile())
-                        fileToLoad = globalPath;
-                    
-                }
+                else if (param.equalsIgnoreCase("--unlock"))
+                    isUnlocked = true;
             }
             
-            mainWindow = std::make_unique<MainWindow>(fileToLoad, isConsoleApp);
+            mainWindow = std::make_unique<MainWindow>(isUnlocked, isConsoleApp);
         }
         else
         {
@@ -160,7 +149,7 @@ public:
 
     const String getApplicationName()
     {
-        return "Open Ephys GUI";
+        return isUnlocked ? "Open Ephys GUI (NON-CLINICAL USE ONLY)" : "Open Ephys GUI";
     }
 
     const String getApplicationVersion()
@@ -182,6 +171,7 @@ private:
     std::unique_ptr <MainWindow> mainWindow;
     std::unique_ptr <CustomLookAndFeel> customLookAndFeel;
     std::ofstream console_out;
+    bool isUnlocked;
 };
 
 //==============================================================================

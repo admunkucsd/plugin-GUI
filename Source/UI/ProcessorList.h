@@ -101,6 +101,8 @@ public:
     /** Returns the height requested by the ProcessorList. Determines whether or not
     to draw scroll bars.*/
     int getTotalHeight();
+    
+    void setSignalChainLock(bool isLocked);
 
 private:
 
@@ -152,6 +154,8 @@ private:
     int maximumNameOffset;
 
     Viewport* viewport;
+    
+    bool isSignalChainLocked;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ProcessorList);
 

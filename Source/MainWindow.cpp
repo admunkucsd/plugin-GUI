@@ -28,7 +28,7 @@
 #include <stdio.h>
 
 
-MainWindow::MainWindow(const File& fileToLoad, bool isConsoleApp_) :
+MainWindow::MainWindow(bool isUnlocked, bool isConsoleApp_) :
     isConsoleApp(isConsoleApp_)
 {
     
@@ -66,7 +66,7 @@ MainWindow::MainWindow(const File& fileToLoad, bool isConsoleApp_) :
 	LOGC("CPU: ", SystemStats::getCpuModel(), " (", SystemStats::getNumCpus(), " core)");
 
 	shouldReloadOnStartup = true;
-	shouldEnableHttpServer = true;
+	shouldEnableHttpServer = false;
 	openDefaultConfigWindow = false;
 
 	// Create ProcessorGraph and AudioComponent, and connect them.
@@ -132,9 +132,14 @@ MainWindow::MainWindow(const File& fileToLoad, bool isConsoleApp_) :
     processorGraph->updateBufferSize(); // needs to happen after processorGraph gets the right pointers
 
 	// Load a specific state of the GUI (custom, default, last-saved, or recovery config)
-    if (!fileToLoad.getFullPathName().isEmpty())
+    if (!isUnlocked)
     {
-        loadProcessorGraph(fileToLoad);
+        loadProcessorGraph(configsDir.getChildFile("config.xml"));
+        if(!isConsoleApp) {
+            UIComponent* ui = (UIComponent*) documentWindow->getContentComponent();
+            ui->getEditorViewport()->lockSignalChain(true);
+            ui->getProcessorList()->setSignalChainLock(true);
+        }
     }
 	else if (openDefaultConfigWindow)
 	{
@@ -443,7 +448,9 @@ void MainWindow::loadWindowBounds()
 			else if (e->hasTagName("SIGNALCHAIN"))
 			{
 				UIComponent* ui = (UIComponent*)documentWindow->getContentComponent();
-				ui->getEditorViewport()->lockSignalChain(e->getBoolAttribute("locked", false));
+                //how to set lock
+//				ui->getEditorViewport()->lockSignalChain(e->getBoolAttribute("locked", false));
+//                ui->getProcessorList()->setSignalChainLock(e->getBoolAttribute("locked", false));
 			}
 
 		}

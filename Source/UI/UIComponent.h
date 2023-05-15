@@ -121,6 +121,11 @@ public:
 
     /** Returns the names of all the requested menubar drop-down lists (e.g., "File", "Edit", "Help", etc.). */
     StringArray getMenuBarNames();
+    
+    
+    PopupMenu buildMenuForLockedSignalChain(int menuIndex);
+    
+    PopupMenu buildMenuForUnlockedSignalChain(int menuIndex);
 
     /** Adds the commands contained within a given drop-down menu from the menubar. */
     PopupMenu getMenuForIndex(int topLevelMenuIndex, const String& menuName);
@@ -149,6 +154,7 @@ public:
     StringArray getRecentlyUsedFilenames();
 
     void setRecentlyUsedFilenames(const StringArray& filenames);
+
 	
 private:
 

@@ -375,75 +375,118 @@ void UIComponent::childComponentChanged()
 StringArray UIComponent::getMenuBarNames()
 {
 
-	const char* const names[] = { "File", "Edit", "View", "Help", 0 };
+    StringArray returnArray;
+    if(editorViewport -> isSignalChainLocked()){
+        returnArray = StringArray({"View", "Help", 0 });
+    } else {
+        returnArray = StringArray({ "File", "Edit", "View", "Help", 0 });
+    }
 
-	return StringArray(names);
+	return returnArray;
+
+}
+
+PopupMenu UIComponent::buildMenuForLockedSignalChain(int menuIndex){
+    ApplicationCommandManager* commandManager = &(mainWindow->commandManager);
+
+    PopupMenu menu;
+
+    if (menuIndex == 0)
+    {
+
+        PopupMenu clockMenu;
+        clockMenu.addCommandItem(commandManager, setClockModeDefault);
+        clockMenu.addCommandItem(commandManager, setClockModeHHMMSS);
+
+        menu.addCommandItem(commandManager, toggleSignalChain);
+        menu.addCommandItem(commandManager, toggleFileInfo);
+        menu.addSeparator();
+        menu.addSubMenu("Clock mode", clockMenu);
+        menu.addSeparator();
+        menu.addCommandItem(commandManager, resizeWindow);
+
+    }
+    else if (menuIndex == 1)
+    {
+        menu.addCommandItem(commandManager, showHelp);
+    }
+
+    return menu;
+
+}
+
+PopupMenu UIComponent::buildMenuForUnlockedSignalChain(int menuIndex){
+    ApplicationCommandManager* commandManager = &(mainWindow->commandManager);
+
+    PopupMenu menu;
+
+    if (menuIndex == 0)
+    {
+        menu.addCommandItem(commandManager, openSignalChain);
+        menu.addSeparator();
+        menu.addCommandItem(commandManager, saveSignalChain);
+        menu.addCommandItem(commandManager, saveSignalChainAs);
+        menu.addSeparator();
+        menu.addCommandItem(commandManager, reloadOnStartup);
+        menu.addSeparator();
+        menu.addCommandItem(commandManager, toggleHttpServer);
+        menu.addSeparator();
+        menu.addCommandItem(commandManager, openDefaultConfigWindow);
+        menu.addSeparator();
+        menu.addCommandItem(commandManager, openPluginInstaller);
+
+#if !JUCE_MAC
+        menu.addSeparator();
+        menu.addCommandItem(commandManager, StandardApplicationCommandIDs::quit);
+#endif
+
+    }
+    else if (menuIndex == 1)
+    {
+        menu.addCommandItem(commandManager, undo);
+        menu.addCommandItem(commandManager, redo);
+        menu.addSeparator();
+        menu.addCommandItem(commandManager, copySignalChain);
+        menu.addCommandItem(commandManager, pasteSignalChain);
+        menu.addSeparator();
+        menu.addCommandItem(commandManager, clearSignalChain);
+        menu.addSeparator();
+        menu.addCommandItem(commandManager, lockSignalChain);
+
+    }
+    else if (menuIndex == 2)
+    {
+
+        PopupMenu clockMenu;
+        clockMenu.addCommandItem(commandManager, setClockModeDefault);
+        clockMenu.addCommandItem(commandManager, setClockModeHHMMSS);
+
+        menu.addCommandItem(commandManager, toggleProcessorList);
+        menu.addCommandItem(commandManager, toggleSignalChain);
+        menu.addCommandItem(commandManager, toggleFileInfo);
+        menu.addSeparator();
+        menu.addSubMenu("Clock mode", clockMenu);
+        menu.addSeparator();
+        menu.addCommandItem(commandManager, resizeWindow);
+
+    }
+    else if (menuIndex == 3)
+    {
+        menu.addCommandItem(commandManager, showHelp);
+    }
+
+    return menu;
 
 }
 
 PopupMenu UIComponent::getMenuForIndex(int menuIndex, const String& menuName)
 {
-	ApplicationCommandManager* commandManager = &(mainWindow->commandManager);
-
-	PopupMenu menu;
-
-	if (menuIndex == 0)
-	{
-		menu.addCommandItem(commandManager, openSignalChain);
-        menu.addSeparator();
-		menu.addCommandItem(commandManager, saveSignalChain);
-		menu.addCommandItem(commandManager, saveSignalChainAs);
-        menu.addSeparator();
-		menu.addCommandItem(commandManager, reloadOnStartup);
-		menu.addSeparator();
-		menu.addCommandItem(commandManager, toggleHttpServer);
-		menu.addSeparator();
-		menu.addCommandItem(commandManager, openDefaultConfigWindow);
-		menu.addSeparator();
-		menu.addCommandItem(commandManager, openPluginInstaller);
-
-#if !JUCE_MAC
-		menu.addSeparator();
-		menu.addCommandItem(commandManager, StandardApplicationCommandIDs::quit);
-#endif
-
-	}
-	else if (menuIndex == 1)
-	{
-		menu.addCommandItem(commandManager, undo);
-		menu.addCommandItem(commandManager, redo);
-		menu.addSeparator();
-		menu.addCommandItem(commandManager, copySignalChain);
-		menu.addCommandItem(commandManager, pasteSignalChain);
-		menu.addSeparator();
-		menu.addCommandItem(commandManager, clearSignalChain);
-		menu.addSeparator();
-		menu.addCommandItem(commandManager, lockSignalChain);
-
-	}
-	else if (menuIndex == 2)
-	{
-
-		PopupMenu clockMenu;
-		clockMenu.addCommandItem(commandManager, setClockModeDefault);
-		clockMenu.addCommandItem(commandManager, setClockModeHHMMSS);
-
-		menu.addCommandItem(commandManager, toggleProcessorList);
-		menu.addCommandItem(commandManager, toggleSignalChain);
-		menu.addCommandItem(commandManager, toggleFileInfo);
-		menu.addSeparator();
-		menu.addSubMenu("Clock mode", clockMenu);
-		menu.addSeparator();
-		menu.addCommandItem(commandManager, resizeWindow);
-
-	}
-	else if (menuIndex == 3)
-	{
-		menu.addCommandItem(commandManager, showHelp);
-	}
-
-	return menu;
-
+    if(editorViewport->isSignalChainLocked()){
+        return buildMenuForLockedSignalChain(menuIndex);
+    }
+    else {
+        return buildMenuForUnlockedSignalChain(menuIndex);
+    }
 }
 
 void UIComponent::menuItemSelected(int menuItemID, int topLevelMenuIndex)

@@ -387,6 +387,9 @@ void LfpDisplayNode::handleBroadcastMessage(String msg) {
                 }
             }
         }
+        for(auto name: channelNames) {
+            std::cout << name <<std::endl;
+        }
         splitDisplays[split] -> setFilteredChannels(channelNames);
         splitDisplays[split] -> shouldRebuildChannelList = true;
     }

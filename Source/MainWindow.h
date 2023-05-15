@@ -51,7 +51,7 @@ public:
 
     /** Initializes the MainWindow, creates the AudioComponent, ProcessorGraph,
         and UIComponent, and sets the window boundaries. */
-    MainWindow(const File& fileToLoad = File(), bool isConsoleApp = false);
+    MainWindow(bool isUnlocked = false, bool isConsoleApp = false);
 
     /** Destroys the AudioComponent, ProcessorGraph, and UIComponent, and saves the window boundaries. */
     ~MainWindow();
