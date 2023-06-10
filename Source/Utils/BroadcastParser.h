@@ -23,6 +23,9 @@ public:
     static bool checkForCommand(String expectedPlugin, String expectedCommand, String msg, var& payload);
     
     static bool getIntField(DynamicObject::Ptr payload, String name, int& value, int lowerBound = INT_MAX, int upperBound = INT_MIN);
+    
+    static bool getStringField(DynamicObject::Ptr payload, String name, String& value);
+
 
     static GenericProcessor* getDestinationNode(GenericProcessor* root, int nodeId);
 

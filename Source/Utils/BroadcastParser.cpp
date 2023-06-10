@@ -34,6 +34,14 @@ bool BroadcastParser::getIntField(DynamicObject::Ptr payload, String name, int& 
     return true;
 }
 
+bool BroadcastParser::getStringField(DynamicObject::Ptr payload, String name, String& value) {
+    if(!payload->hasProperty(name) || !payload -> getProperty(name).isString())
+        return false;
+    value = payload->getProperty(name);
+    return true;
+}
+
+
 
 
 bool BroadcastParser::checkForCommand(String expectedPlugin, String expectedCommand, String msg, var& payload) {
