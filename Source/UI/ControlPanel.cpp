@@ -52,7 +52,7 @@ PlayButton::PlayButton()
     setClickingTogglesState(true);
     setTooltip("Start/stop acquisition");
     
-    updateImages();
+    //updateImages();
 }
 
 void PlayButton::updateImages()
@@ -89,7 +89,7 @@ RecordButton::RecordButton()
     setClickingTogglesState(true);
     setTooltip("Start/stop writing to disk");
     
-    updateImages();
+    //updateImages();
 }
 
 void RecordButton::updateImages()

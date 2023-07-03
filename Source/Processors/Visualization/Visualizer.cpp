@@ -40,7 +40,7 @@ void Visualizer::update()
 
     if (processor != nullptr)
     {
-        LOGDD(processor->getEditor()->getNameAndId(), " visualizer updating parameter editors");
+//LOGDD(processor->getEditor()->getNameAndId(), " visualizer updating parameter editors");
         
         auto streamId = processor->getEditor()->getCurrentStream();
         bool streamAvailable = streamId > 0 ? true : false;
