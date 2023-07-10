@@ -120,11 +120,12 @@ class LfpDisplayNodeTests : public ::testing::Test {
 protected:
     void SetUp() override {
         num_channels = 16;
-        tester = std::make_unique<ProcessorTester>(FakeSourceNodeParams{
+        tester = std::make_unique<ProcessorTester>(TestSourceNodeBuilder
+                                                   (FakeSourceNodeParams{
             num_channels,
             sample_rate_,
             bitVolts_
-        });
+        }));
 
         processor = tester->Create<LfpViewer::LfpDisplayNode>(Plugin::Processor::SINK);
         

@@ -17,11 +17,12 @@ class RecordNodeTests :  public ::testing::Test {
 protected:
     void SetUp() override {
         num_channels = 8;
-        tester = std::make_unique<ProcessorTester>(FakeSourceNodeParams{
+        tester = std::make_unique<ProcessorTester>(TestSourceNodeBuilder
+                                                   (FakeSourceNodeParams{
             num_channels,
             sample_rate_,
             bitVolts_
-        });
+        }));
 
         parent_recording_dir = std::filesystem::temp_directory_path() / "record_node_tests";
         if (std::filesystem::exists(parent_recording_dir)) {

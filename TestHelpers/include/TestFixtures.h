@@ -8,9 +8,41 @@
 #include <Audio/AudioComponent.h>
 #include <UI/ControlPanel.h>
 
+
+enum class TestSourceNodeType {Fake, Base};
+
+
+class TestSourceNodeBuilder{
+public:
+	TestSourceNodeBuilder(FakeSourceNodeParams params) : _fake_source_node_params(params), _source_node_type(TestSourceNodeType::Fake) {} 
+	TestSourceNodeBuilder(DataThreadCreator creator) : _data_thread_creator(creator), _source_node_type(TestSourceNodeType::Base) {}
+
+	SourceNode* buildSourceNode(){
+		switch(_source_node_type) {
+			case TestSourceNodeType::Fake : {
+				return (SourceNode*)(new FakeSourceNode(_fake_source_node_params));
+			}
+			case TestSourceNodeType::Base : {
+				return new SourceNode("BaseSourceNode", _data_thread_creator);
+			}
+		}
+	}
+    
+    TestSourceNodeType getTestSourceNodeType() const {
+        return _source_node_type;
+    }
+
+
+private:
+	FakeSourceNodeParams _fake_source_node_params;
+	DataThreadCreator _data_thread_creator;
+	TestSourceNodeType _source_node_type;
+};
+
+
 class ProcessorTester {
 public:
-    ProcessorTester(FakeSourceNodeParams fake_source_node_params) {
+    ProcessorTester(TestSourceNodeBuilder source_node_builder) {
         // Singletons...
         MessageManager::deleteInstance();
 
@@ -21,8 +53,8 @@ public:
         AccessClass::clearAccessClassStateForTesting();
 
         //Create LookAndFeel object
-        customLookAndFeel = std::make_unique<CustomLookAndFeel>();
-        LookAndFeel::setDefaultLookAndFeel(customLookAndFeel.get());
+        custom_look_and_feel = std::make_unique<CustomLookAndFeel>();
+        LookAndFeel::setDefaultLookAndFeel(custom_look_and_feel.get());
 
         
         // All of these sets the global state in AccessClass in their constructors
@@ -30,7 +62,7 @@ public:
         processor_graph = std::make_unique<ProcessorGraph>(true);
         control_panel = std::make_unique<ControlPanel>(processor_graph.get(), audio_component.get(), true);
 
-        auto sn_temp = new FakeSourceNode(fake_source_node_params);
+        SourceNode* sn_temp = source_node_builder.buildSourceNode();
         source_node_id = next_processor_id_++;
         sn_temp->setNodeId(source_node_id);
         juce::AudioProcessorGraph::Node* n = processor_graph->addNode(
@@ -38,7 +70,8 @@ public:
             juce::AudioProcessorGraph::NodeID(source_node_id));
 
         // Create the source node, and place it in the graph
-        auto sn = (FakeSourceNode *) n->getProcessor();
+        auto sn = (GenericProcessor*) n->getProcessor();
+        sn->setHeadlessMode(true);
         sn->initialize(false);
         sn->setDestNode(nullptr);
 
@@ -50,40 +83,6 @@ public:
         control_panel ->updateColors();
 
 	}
-
-    ProcessorTester(DataThreadCreator data_thread_creator) {
-        // Singletons...
-        MessageManager::deleteInstance();
-
-        // initializes the singleton instance
-        MessageManager::getInstance();
-
-        // Reset all state so no interactions between tests.
-        AccessClass::clearAccessClassStateForTesting();
-
-        // All of these sets the global state in AccessClass in their constructors
-        audio_component = std::make_unique<AudioComponent>();
-        processor_graph = std::make_unique<ProcessorGraph>(true);
-        control_panel = std::make_unique<ControlPanel>(processor_graph.get(), audio_component.get(), true);
-
-        auto sn_temp = new SourceNode("RealSourceNode", data_thread_creator);
-        source_node_id = next_processor_id_++;
-        sn_temp->setNodeId(source_node_id);
-        juce::AudioProcessorGraph::Node* n = processor_graph->addNode(
-            std::move(std::unique_ptr<AudioProcessor>(sn_temp)),
-            juce::AudioProcessorGraph::NodeID(source_node_id));
-
-        // Create the source node, and place it in the graph
-        auto sn = (SourceNode *) n->getProcessor();
-        sn->setHeadlessMode(true);
-        sn->initialize(false);
-        sn->setDestNode(nullptr);
-
-        control_panel->updateRecordEngineList();
-
-        // Refresh everything
-        processor_graph->updateSettings(sn, false);
-    }
 
     ~ProcessorTester() {
         control_panel = nullptr;
@@ -214,7 +213,7 @@ private:
 
     int next_processor_id_ = 1;
     int current_sample_index = 0;
-    std::unique_ptr<CustomLookAndFeel> customLookAndFeel;
+    std::unique_ptr<CustomLookAndFeel> custom_look_and_feel;
 };
 
 

@@ -10,6 +10,9 @@ protected:
         MessageManager::deleteInstance();
         MessageManager::getInstance();
         AccessClass::clearAccessClassStateForTesting();
+        
+        custom_look_and_feel = std::make_unique<CustomLookAndFeel>();
+        LookAndFeel::setDefaultLookAndFeel(custom_look_and_feel.get());
 
         // All of these sets the global state in AccessClass in their constructors
         audio_component = std::make_unique<AudioComponent>();
@@ -32,6 +35,7 @@ protected:
 private:
     std::unique_ptr<AudioComponent> audio_component;
     std::unique_ptr<ControlPanel> control_panel;
+    std::unique_ptr<CustomLookAndFeel> custom_look_and_feel;
 };
 
 TEST_F(ProcessorGraphTest, LoadFromXMLTest) {

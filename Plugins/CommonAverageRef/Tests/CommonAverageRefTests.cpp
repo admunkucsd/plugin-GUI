@@ -13,11 +13,12 @@ class CommonAverageRefTests : public ::testing::Test  {
 protected:
     void SetUp() override {
         num_channels = 2;
-        tester = std::make_unique<ProcessorTester>(FakeSourceNodeParams{
+        tester = std::make_unique<ProcessorTester>(TestSourceNodeBuilder
+                                                   (FakeSourceNodeParams{
             num_channels,
             sample_rate_,
             1.0,
-        });
+        }));
         processor = tester->Create<CommonAverageRef>(Plugin::Processor::FILTER);
         ASSERT_EQ(processor->getNumDataStreams(), 1);
         stream_id = processor->getDataStreams()[0]->getStreamId();
