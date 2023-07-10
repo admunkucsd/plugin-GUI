@@ -172,35 +172,17 @@ protected:
     }
     
     /*Writes data from an AudioBuffer to processor. Verifies that the AudioBuffer is not changed*/
-    void WriteBlock(AudioBuffer<float> &buffer) {
-        auto audio_processor = (AudioProcessor *)processor;
-        auto data_streams = processor->getDataStreams();
-        ASSERT_EQ(data_streams.size(), 1);
-        auto streamId = data_streams[0]->getStreamId();
-        processor -> setParameter(0, streamId);
-        HeapBlock<char> data;
-        size_t dataSize = SystemEvent::fillTimestampAndSamplesData(
-            data,
-            processor,
-            streamId,
-            current_sample_index,
-            0,
-            buffer.getNumSamples(),
-            0);
-        MidiBuffer eventBuffer;
-        eventBuffer.addEvent(data, dataSize, 0);
-
-        auto original_buffer = buffer;
-        audio_processor->processBlock(buffer, eventBuffer);
+    void WriteBlock(AudioBuffer<float> &input_buffer) {
+        auto output_buffer = tester->ProcessBlock(processor, input_buffer);
         // Assert the buffer hasn't changed after process()
-        ASSERT_EQ(buffer.getNumSamples(), original_buffer.getNumSamples());
-        ASSERT_EQ(buffer.getNumChannels(), original_buffer.getNumChannels());
-        for (int chidx = 0; chidx < buffer.getNumChannels(); chidx++) {
-            for (int sample_idx = 0; sample_idx < buffer.getNumSamples(); ++sample_idx) {
-                ASSERT_EQ(buffer.getSample(chidx, sample_idx), original_buffer.getSample(chidx, sample_idx));
+        ASSERT_EQ(input_buffer.getNumSamples(), output_buffer.getNumSamples());
+        ASSERT_EQ(input_buffer.getNumChannels(), output_buffer.getNumChannels());
+        for (int chidx = 0; chidx < input_buffer.getNumChannels(); chidx++) {
+            for (int sample_idx = 0; sample_idx < input_buffer.getNumSamples(); ++sample_idx) {
+                ASSERT_EQ(input_buffer.getSample(chidx, sample_idx), output_buffer.getSample(chidx, sample_idx));
             }
         }
-        current_sample_index += buffer.getNumSamples();
+        current_sample_index += input_buffer.getNumSamples();
     }
     
     /*Gets information from canvas needed to build an ExpectedImage*/

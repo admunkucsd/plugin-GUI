@@ -5,7 +5,6 @@
 class DataViewportTests : public ::testing::Test {
 protected:
     void SetUp() override {
-//        MessageManager::deleteInstance();
         MessageManager::getInstance();
         
         customLookAndFeel = std::make_unique<CustomLookAndFeel>();

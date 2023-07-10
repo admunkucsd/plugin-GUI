@@ -1,3 +1,5 @@
+#define _USE_MATH_DEFINES
+#include <math.h>
 #include <stdio.h>
 
 #include "gtest/gtest.h"
@@ -7,7 +9,6 @@
 #include <ModelProcessors.h>
 #include <ModelApplication.h>
 #include <TestFixtures.h>
-
 class CommonAverageRefTests : public ::testing::Test  {
 protected:
     void SetUp() override {

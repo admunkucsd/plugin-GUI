@@ -101,7 +101,7 @@ public:
     void acknowledgeTrigger(int splitId);
 
 
-    bool getHeadlessMode() {
+    bool getHeadlessMode() const {
         return headlessMode;
     }
 

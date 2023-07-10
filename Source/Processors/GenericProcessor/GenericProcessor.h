@@ -554,6 +554,8 @@ protected:
         If recording is active, this message will be recorded */
     void broadcastMessage(String msg);
     
+    /** Sends a message String to another processor node in the ProcessorGraph while acqusition
+        not active */
     void sendConfigMessage(GenericProcessor* destination, String message);
 
     /** Add a Spike event to the outgoing buffer */

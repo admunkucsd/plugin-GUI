@@ -26,7 +26,6 @@
 
 #include "../../../JuceLibraryCode/JuceHeader.h"
 #include "../PluginManager/OpenEphysPlugin.h"
-//#include "../PluginManager/PluginManager.h"
 #include "../../TestableExport.h"
 class GenericProcessor;
 class GenericEditor;
