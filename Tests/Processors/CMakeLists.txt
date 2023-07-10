@@ -8,3 +8,9 @@ target_include_directories(
 		PRIVATE
 		"${SOURCE_DIRECTORY}"
 )
+
+target_compile_definitions(
+		${COMPONENT_NAME}_tests
+		PRIVATE
+		RESOURCES_DIRECTORY="${RESOURCES_DIRECTORY}"
+)

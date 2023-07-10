@@ -37,15 +37,11 @@ private:
 TEST_F(ProcessorGraphTest, LoadFromXMLTest) {
     
     std::string default_file_reader_path = "default";
-    File currentPath = File::getSpecialLocation(File::currentApplicationFile);
-    while(currentPath.getFileName() != "plugin-GUI") {
-        currentPath = currentPath.getParentDirectory();
-    }
     
-    currentPath = currentPath.getChildFile("Resources/FileReader/resources/structure.oebin");
-    
-    if(currentPath.existsAsFile()) {
-        default_file_reader_path = currentPath.getFullPathName().toStdString();
+    File default_file_reader_path_resources = File(String(RESOURCES_DIRECTORY)).getChildFile("FileReader/resources/structure.oebin");
+
+    if(default_file_reader_path_resources.existsAsFile()) {
+        default_file_reader_path = default_file_reader_path_resources.getFullPathName().toStdString();
     }
     
     // An example XML from a real run of OpenEphys. To generate this, we opened OpenEphys, dragged a FileReader and
