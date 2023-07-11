@@ -62,7 +62,8 @@ public:
     /* Broadcasts a message from the DataThread to all other processors*/
     void broadcastDataThreadMessage(String msg);
     
-    /* Broadcasts a message from the DataThread to all other processors*/
+    /* Sends a config message from the DataThread to another processor while
+     acquisition is paused. Should only be used by a SourceNode's DataThread*/
     void sendDataThreadConfigMessage(GenericProcessor* destProcessor, String msg);
 
     /* Gets the sample rate for a particular subprocessor*/
