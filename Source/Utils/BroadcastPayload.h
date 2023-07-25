@@ -10,6 +10,7 @@
 
 #include "../../JuceLibraryCode/JuceHeader.h"
 #include <map>
+#include <climits>
 class BroadcastPayload {
 public:
 	BroadcastPayload(String command, DynamicObject::Ptr payload);
