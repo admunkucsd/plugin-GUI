@@ -430,6 +430,11 @@ LfpDisplayOptions::LfpDisplayOptions(LfpDisplayCanvas* canvas_, LfpDisplaySplitt
         *rangeGain[ContinuousChannel::Type::AUX]
         , ContinuousChannel::Type::AUX);
 
+    numSamplesSelection = std::make_unique<ComboBox>("Number of Samples");
+    numSamplesSelection->addItemList({ "1", "2", "3", "4", "5" }, 1);
+    numSamplesSelection->addListener(this);
+    numSamplesSelection->setSelectedId(1, dontSendNotification);
+    addAndMakeVisible(numSamplesSelection.get());
 }
 
 void LfpDisplayOptions::timerCallback()
@@ -469,6 +474,7 @@ void LfpDisplayOptions::resized()
         height);
 
     colorGroupingSelection->setBounds(colourSchemeOptionSelection->getRight() + 15, getHeight() - 30, 55, height);
+    numSamplesSelection->setBounds(colorGroupingSelection->getRight() + 45, getHeight() - 30, 55, height);
 
     int startHeight = 167;
     int verticalSpacing = 29;
@@ -583,6 +589,7 @@ void LfpDisplayOptions::paint(Graphics& g)
 
     g.drawText("Color scheme", colourSchemeOptionSelection->getX(), colourSchemeOptionSelection->getY() - 22, 300, 20, Justification::left, false);
     g.drawText("Color grouping", colorGroupingSelection->getX(), colorGroupingSelection->getY() - 22, 300, 20, Justification::left, false);
+    g.drawText("Num Samples", numSamplesSelection->getX(), numSamplesSelection->getY() - 22, 300, 20, Justification::left, false);
 
     g.drawText("Spike raster:",
         10,

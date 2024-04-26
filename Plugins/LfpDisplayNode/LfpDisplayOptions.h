@@ -236,6 +236,8 @@ private:
     int rangeSteps[CHANNEL_TYPES];
 
     bool medianOffsetOnForSpikeRaster;
+
+    std::unique_ptr<ComboBox> numSamplesSelection;
 };
     
 }; // namespace
