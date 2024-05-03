@@ -310,6 +310,8 @@ protected:
     int height;
     int x;
     int y;
+
+    String dumpPngPath = "test_misc/VisualIntegrityTest.png";
 };
 
 
@@ -341,45 +343,45 @@ TEST_F(LfpDisplayNodeTests, VisualIntegrityTest)
     expected.addToBuffer(input_buffer);
     canvas->refreshState();
     Image canvas_image = canvas->createComponentSnapshot(canvasSnapshot);
-    DumpPng("test_misc/VisualIntegrityTest.png", canvas_image);
     Image expected_image = expected.getImage(width, height, channelColors, backgroundColour, midlineColour, 125);
     int missCount = GetImageDifferencePixelCount(expected_image, canvas_image);
-    //ASSERT_LE(missCount / (width * height), 0.01f);
+    ASSERT_LE(missCount / (width * height), 0.01f);
 
-    ////Add 5 10Hz waves with +-250uV amplitude
-    //input_buffer = CreateBufferSinusoidal(5, num_channels, 1000, 250);
-    //WriteBlock(input_buffer);
-    //expected.addToBuffer(input_buffer);
-    //canvas->refreshState();
+    //Add 5 10Hz waves with +-250uV amplitude
+    input_buffer = CreateBufferSinusoidal(5, num_channels, 1000, 250);
+    WriteBlock(input_buffer);
+    expected.addToBuffer(input_buffer);
+    canvas->refreshState();
 
-    //canvas_image = canvas->createComponentSnapshot(canvasSnapshot);
-    //expected_image = expected.getImage(width, height, channelColors, backgroundColour, midlineColour, 125);
-    //missCount = GetImageDifferencePixelCount(expected_image, canvas_image);
-    //ASSERT_LE(float(missCount) / float(width * height), 0.01f);
+    canvas_image = canvas->createComponentSnapshot(canvasSnapshot);
+    expected_image = expected.getImage(width, height, channelColors, backgroundColour, midlineColour, 125);
+    missCount = GetImageDifferencePixelCount(expected_image, canvas_image);
+    ASSERT_LE(float(missCount) / float(width * height), 0.01f);
 
-    ////Add 10 40Hz waves with +-250uV amplitude
-    //input_buffer = CreateBufferSinusoidal(10, num_channels, 500, 250);
-    //WriteBlock(input_buffer);
-    //expected.addToBuffer(input_buffer);
-    //canvas->refreshState();
+    //Add 10 40Hz waves with +-250uV amplitude
+    input_buffer = CreateBufferSinusoidal(10, num_channels, 500, 250);
+    WriteBlock(input_buffer);
+    expected.addToBuffer(input_buffer);
+    canvas->refreshState();
 
-    //canvas_image = canvas->createComponentSnapshot(canvasSnapshot);
-    //expected_image = expected.getImage(width, height, channelColors, backgroundColour, midlineColour, 125);
-    //missCount = GetImageDifferencePixelCount(expected_image, canvas_image);
-    //ASSERT_LE(float(missCount) / float(width * height), 0.01f);
+    canvas_image = canvas->createComponentSnapshot(canvasSnapshot);
+    expected_image = expected.getImage(width, height, channelColors, backgroundColour, midlineColour, 125);
+    missCount = GetImageDifferencePixelCount(expected_image, canvas_image);
+    ASSERT_LE(float(missCount) / float(width * height), 0.01f);
 
-    ////Resize canvas to have half the vertical height and twice the uV range
-    //canvas->setChannelHeight(0, 20);
-    //canvas->setChannelRange(0, 500, ContinuousChannel::Type::ELECTRODE);
-    //canvas->refreshState();
-    //SetExpectedImageParameters(canvas.get());
+    //Resize canvas to have half the vertical height and twice the uV range
+    canvas->setChannelHeight(0, 20);
+    canvas->setChannelRange(0, 500, ContinuousChannel::Type::ELECTRODE);
+    canvas->refreshState();
+    SetExpectedImageParameters(canvas.get());
 
-    //canvasSnapshot.setBounds(x, y, width, height);
+    canvasSnapshot.setBounds(x, y, width, height);
 
-    //canvas_image = canvas->createComponentSnapshot(canvasSnapshot);
-    //expected_image = expected.getImage(width, height, channelColors, backgroundColour, midlineColour, 250);
-    //missCount = GetImageDifferencePixelCount(expected_image, canvas_image);
-    //ASSERT_LE(float(missCount) / float(width * height), 0.01f);
+    canvas_image = canvas->createComponentSnapshot(canvasSnapshot);
+    expected_image = expected.getImage(width, height, channelColors, backgroundColour, midlineColour, 250);
+    missCount = GetImageDifferencePixelCount(expected_image, canvas_image);
+    DumpPng(dumpPngPath, canvas_image);
+    ASSERT_LE(float(missCount) / float(width * height), 0.01f);
 
     tester->stopAcquisition();
 }
