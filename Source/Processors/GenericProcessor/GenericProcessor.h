@@ -591,6 +591,7 @@ protected:
                                 uint16 streamId,
                                 uint16 syncStreamId = 0);
 
+    // UG3 Specific
     void setReferenceSample(uint16 streamId,
         double timestamp,
         int64 sampleIndex);
