@@ -96,7 +96,11 @@ int DataBuffer::addToBuffer (float* data,
         memcpy (sampleNumberBuffer + si[i], sampleNumbers + idx, (size_t) cSize * sizeof (int64));
         memcpy (timestampBuffer + si[i], timestamps + idx, (size_t) cSize * sizeof (double));
         memcpy (eventCodeBuffer + si[i], eventCodes + idx, (size_t) cSize * sizeof (uint64));
-        memcpy (timestampSampleBuffer + si[i], &timestampSampleIndex, (size_t) cSize * sizeof (std::optional<int64>));
+
+        if (timestampSampleIndex.has_value())
+        {
+            memcpy (timestampSampleBuffer + si[i], &timestampSampleIndex, (size_t) cSize * sizeof (std::optional<int64>));
+        }
 
         idx += cSize;
     }
