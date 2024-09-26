@@ -620,6 +620,10 @@ protected:
                                  uint16 streamId,
                                  uint16 syncStreamId = 0);
 
+    void setReferenceSample (uint16 streamId,
+                             double timestamp,
+                             int64 sampleIndex);
+
     // --------------------------------------------
     //     CHANNEL INDEXING
     // --------------------------------------------
@@ -762,6 +766,9 @@ private:
 
     /** Map between stream IDs and start time of process callbacks. */
     std::map<uint16, int64> processStartTimes;
+
+    /** Map between stream IDs and  reference samples */
+    std::map<uint16, std::optional<std::pair<int64, double>>> referenceSamplesForBlock;
 
     /** First software timestamp of process() callback. */
     juce::int64 m_initialProcessTime;

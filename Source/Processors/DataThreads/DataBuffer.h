@@ -59,7 +59,8 @@ public:
                      int64* sampleNumbers,
                      double* timestamps,
                      uint64* eventCodes,
-                     int numItems);
+                     int numItems,
+                     std::optional<int64> timestampSampleIndex = std::nullopt);
 
     /** Returns the number of samples currently available in the buffer.*/
     int getNumSamples() const;
@@ -71,7 +72,8 @@ public:
                            uint64* eventCodes,
                            int maxSize,
                            int dstStartChannel = 0,
-                           int numChannels = -1);
+                           int numChannels = -1,
+                           std::optional<int64>* timestampSampleIndex = nullptr);
 
     /** Resizes the data buffer */
     void resize (int chans, int size);
@@ -83,6 +85,7 @@ private:
     HeapBlock<int64> sampleNumberBuffer;
     HeapBlock<double> timestampBuffer;
     HeapBlock<uint64> eventCodeBuffer;
+    HeapBlock<std::optional<int64>> timestampSampleBuffer;
 
     int64 lastSampleNumber;
     double lastTimestamp;
