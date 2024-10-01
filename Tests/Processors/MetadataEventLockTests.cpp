@@ -19,7 +19,7 @@ public:
     }
 };
 
-class MetadataEventLockTests : public testing::Test
+class MetadataEventLockUnitTests : public testing::Test
 {
 protected:
     void SetUp() override
@@ -38,12 +38,12 @@ protected:
     MockMetadataEventLock* metadataEventLock;
 };
 
-TEST_F (MetadataEventLockTests, EventMetadataLock_DefaultValue)
+TEST_F (MetadataEventLockUnitTests, EventMetadataLock_DefaultValue)
 {
     EXPECT_FALSE (metadataEventLock->getEventMetadataLock());
 }
 
-TEST_F (MetadataEventLockTests, EventMetadataLock_SetValue)
+TEST_F (MetadataEventLockUnitTests, EventMetadataLock_SetValue)
 {
     metadataEventLock->setEventMetadataLock(true);
     EXPECT_TRUE (metadataEventLock->getEventMetadataLock());

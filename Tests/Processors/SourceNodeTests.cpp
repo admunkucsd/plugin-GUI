@@ -47,7 +47,7 @@ public:
 private:
 };
 
-class SourceNodeTests : public testing::Test
+class SourceNodeUnitTests : public testing::Test
 {
 protected:
     void SetUp() override
@@ -125,7 +125,7 @@ This data is stored in an internal buffer within the Source Node.
 The Source Node regularly polls this buffer and writes any new samples to an output Audio Buffer.
 This test verifies that given a Data Thread, the Source Node will perform this write and output an Audio Buffer with data samples. 
 */
-TEST_F(SourceNodeTests, DataAcquisition)
+TEST_F(SourceNodeUnitTests, DataAcquisition)
 {
     tester->startAcquisition(false);
 

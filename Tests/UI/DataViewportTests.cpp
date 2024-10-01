@@ -2,7 +2,7 @@
 #include "../../Source/UI/InfoLabel.h"
 #include "gtest/gtest.h"
 
-class DataViewportTests : public ::testing::Test
+class DataViewportUnitTests : public testing::Test
 {
 protected:
     void SetUp() override
@@ -32,7 +32,7 @@ protected:
     std::unique_ptr<CustomLookAndFeel> customLookAndFeel;
 };
 
-TEST_F (DataViewportTests, TestAddTabsAndSwitchTabs)
+TEST_F (DataViewportUnitTests, TestAddTabsAndSwitchTabs)
 {
     auto info_label = std::make_unique<InfoLabel>();
     int node_id = 0;

@@ -16,7 +16,7 @@ public:
     int callbackCalled = 0;
 };
 
-class TimerTests : public testing::Test
+class TimerUnitTests : public testing::Test
 {
 protected:
     void SetUp() override
@@ -33,7 +33,7 @@ protected:
     MockTimer timer;
 };
 
-TEST_F (TimerTests, StartTimer)
+TEST_F (TimerUnitTests, StartTimer)
 {
     // Start the timer with an interval of 100 milliseconds
     timer.startTimer (100);
@@ -48,7 +48,7 @@ TEST_F (TimerTests, StartTimer)
     ASSERT_FALSE (timer.isTimerRunning());
 }
 
-TEST_F (TimerTests, GetTimerInterval)
+TEST_F (TimerUnitTests, GetTimerInterval)
 {
     // Start the timer with an interval of 100 milliseconds
     timer.startTimer (100);
@@ -63,7 +63,7 @@ TEST_F (TimerTests, GetTimerInterval)
     ASSERT_EQ (interval, 100);
 }
 
-TEST_F (TimerTests, IsTimerRunning)
+TEST_F (TimerUnitTests, IsTimerRunning)
 {
     // Start the timer with an interval of 100 milliseconds
     timer.startTimer (100);
@@ -78,7 +78,7 @@ TEST_F (TimerTests, IsTimerRunning)
     ASSERT_TRUE (isRunning);
 }
 
-TEST_F (TimerTests, StopTimer)
+TEST_F (TimerUnitTests, StopTimer)
 {
     // Start the timer with an interval of 100 milliseconds
     timer.startTimer (100);

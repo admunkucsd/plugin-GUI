@@ -4,7 +4,7 @@
 #include <UI/ControlPanel.h>
 #include <modules/juce_gui_basics/juce_gui_basics.h>
 
-class ProcessorGraphTest : public testing::Test
+class ProcessorGraphUnitTests : public testing::Test
 {
 protected:
     void SetUp() override
@@ -42,7 +42,7 @@ private:
     std::unique_ptr<CustomLookAndFeel> customLookAndFeel;
 };
 
-TEST_F (ProcessorGraphTest, LoadFromXMLTest)
+TEST_F (ProcessorGraphUnitTests, LoadFromXMLTest)
 {
     std::string defaultFileReaderPath = "default";
 

@@ -3,7 +3,7 @@
 #include <ProcessorHeaders.h>
 #include <TestFixtures.h>
 
-TEST(PluginClassTests, constructor)
+TEST(PluginClassUnitTests, constructor)
 {
     PluginClass pluginClass;
     EXPECT_EQ(pluginClass.getLibName(), "");
@@ -12,35 +12,35 @@ TEST(PluginClassTests, constructor)
     EXPECT_EQ(pluginClass.getPluginType(), Plugin::INVALID);
 }
 
-TEST(PluginClassTests, setPluginData)
+TEST(PluginClassUnitTests, setPluginData)
 {
     PluginClass pluginClass;
     pluginClass.setPluginData(Plugin::DATA_THREAD, 0);
     EXPECT_EQ(pluginClass.getPluginType(), Plugin::DATA_THREAD);
 }
 
-TEST(PluginClassTests, getLibName)
+TEST(PluginClassUnitTests, getLibName)
 {
     PluginClass pluginClass;
     pluginClass.setPluginData(Plugin::DATA_THREAD, 0);
     EXPECT_EQ(pluginClass.getLibName(), "DataThread");
 }
 
-TEST(PluginClassTests, getPluginName)
+TEST(PluginClassUnitTests, getPluginName)
 {
     PluginClass pluginClass;
     pluginClass.setPluginData(Plugin::DATA_THREAD, 0);
     EXPECT_EQ(pluginClass.getPluginName(), "DataThread");
 }
 
-TEST(PluginClassTests, getLibVersion)
+TEST(PluginClassUnitTests, getLibVersion)
 {
     PluginClass pluginClass;
     pluginClass.setPluginData(Plugin::DATA_THREAD, 0);
     EXPECT_EQ(pluginClass.getLibVersion(), "1.0.0");
 }
 
-TEST(PluginClassTests, getIndex)
+TEST(PluginClassUnitTests, getIndex)
 {
     PluginClass pluginClass;
     pluginClass.setPluginData(Plugin::DATA_THREAD, 0);

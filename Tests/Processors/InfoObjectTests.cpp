@@ -34,7 +34,7 @@ public:
     }
 };
 
-class InfoObjectTests : public testing::Test
+class InfoObjectUnitTests : public testing::Test
 {
 protected:
     void SetUp() override
@@ -55,55 +55,55 @@ protected:
 };
 
 // Test the getType() method
-TEST_F (InfoObjectTests, GetTypeTest)
+TEST_F (InfoObjectUnitTests, GetTypeTest)
 {
     EXPECT_EQ (infoObject->getType(), InfoObject::Type::CONTINUOUS_CHANNEL);
 }
 
 // Test the getLocalIndex() and setLocalIndex() methods
-TEST_F (InfoObjectTests, LocalIndexTest)
+TEST_F (InfoObjectUnitTests, LocalIndexTest)
 {
     infoObject->setLocalIndex (5);
     EXPECT_EQ (infoObject->getLocalIndex(), 5);
 }
 
 // Test the getGlobalIndex() and setGlobalIndex() methods
-TEST_F (InfoObjectTests, GlobalIndexTest)
+TEST_F (InfoObjectUnitTests, GlobalIndexTest)
 {
     infoObject->setGlobalIndex (10);
     EXPECT_EQ (infoObject->getGlobalIndex(), 10);
 }
 
 // Test the getNodeId() and setNodeId() methods
-TEST_F (InfoObjectTests, NodeIdTest)
+TEST_F (InfoObjectUnitTests, NodeIdTest)
 {
     infoObject->setNodeId (15);
     EXPECT_EQ (infoObject->getNodeId(), 15);
 }
 
 // Test the getNodeName() method
-TEST_F (InfoObjectTests, NodeNameTest)
+TEST_F (InfoObjectUnitTests, NodeNameTest)
 {
     infoObject->addProcessor (processor);
     EXPECT_EQ (infoObject->getNodeName(), String("Processor1"));
 }
 
 // Test the getSourceNodeId() method
-TEST_F (InfoObjectTests, SourceNodeIdTest)
+TEST_F (InfoObjectUnitTests, SourceNodeIdTest)
 {
     infoObject->setSourceNodeId (20);
     EXPECT_EQ (infoObject->getSourceNodeId(), 20);
 }
 
 // Test the getSourceNodeName() method
-TEST_F (InfoObjectTests, SourceNodeNameTest)
+TEST_F (InfoObjectUnitTests, SourceNodeNameTest)
 {
     infoObject->setSourceNodeName ("Processor2");
     EXPECT_EQ (infoObject->getSourceNodeName(), "Processor2");
 }
 
 // Test the addProcessor() method
-TEST_F (InfoObjectTests, AddProcessorTest)
+TEST_F (InfoObjectUnitTests, AddProcessorTest)
 {
     infoObject->addProcessor (processor);
     EXPECT_EQ (infoObject->processorChain.size(), 1);
@@ -111,12 +111,12 @@ TEST_F (InfoObjectTests, AddProcessorTest)
 }
 
 // Test the isLocal() method
-TEST_F (InfoObjectTests, IsLocalTest)
+TEST_F (InfoObjectUnitTests, IsLocalTest)
 {
     EXPECT_TRUE (infoObject->isLocal());
 }
 
-TEST_F (InfoObjectTests, CopyConstructorTest)
+TEST_F (InfoObjectUnitTests, CopyConstructorTest)
 {
     infoObject->addProcessor (processor);
     String sourceNodeName = "Processor2";

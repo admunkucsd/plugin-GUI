@@ -34,7 +34,7 @@
 #include <ProcessorHeaders.h>
 #include <TestFixtures.h>
 
-class BandpassFilterTests : public ::testing::Test
+class BandpassFilterUnitTests : public testing::Test
 {
 protected:
     void SetUp() override
@@ -128,7 +128,7 @@ protected:
     float sampleRate = 30000.0;
 };
 
-TEST_F (BandpassFilterTests, TestRespectsLowHighCutSetting)
+TEST_F (BandpassFilterUnitTests, TestRespectsLowHighCutSetting)
 {
     setLowCut (10.0, false);
     ASSERT_FLOAT_EQ (getLowCut(), 10.0f);
@@ -148,7 +148,7 @@ TEST_F (BandpassFilterTests, TestRespectsLowHighCutSetting)
     ASSERT_FLOAT_EQ (getHighCut(), 6000.0f);
 }
 
-TEST_F (BandpassFilterTests, Test_SignalInPassband)
+TEST_F (BandpassFilterUnitTests, Test_SignalInPassband)
 {
     setLowCut (0.5);
     setHighCut (4000.0);
@@ -177,7 +177,7 @@ TEST_F (BandpassFilterTests, Test_SignalInPassband)
     }
 }
 
-TEST_F (BandpassFilterTests, Test_SignalBelowPassband)
+TEST_F (BandpassFilterUnitTests, Test_SignalBelowPassband)
 {
     setLowCut (100, true);
     setHighCut (4000.0, true);
@@ -199,7 +199,7 @@ TEST_F (BandpassFilterTests, Test_SignalBelowPassband)
     }
 }
 
-TEST_F (BandpassFilterTests, Test_SignalAbovePassband)
+TEST_F (BandpassFilterUnitTests, Test_SignalAbovePassband)
 {
     setLowCut (100, true);
     setHighCut (1000.0, true);

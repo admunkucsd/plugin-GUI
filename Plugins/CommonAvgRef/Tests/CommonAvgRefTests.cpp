@@ -33,7 +33,7 @@
 #include <ProcessorHeaders.h>
 #include <TestFixtures.h>
 
-class CommonAverageRefTests : public testing::Test
+class CommonAverageRefUnitTests : public testing::Test
 {
 protected:
     void SetUp() override
@@ -105,12 +105,12 @@ protected:
     float sampleRate = 30000.0;
 };
 
-TEST_F (CommonAverageRefTests, ContructorTest)
+TEST_F (CommonAverageRefUnitTests, ContructorTest)
 {
     ASSERT_EQ (processor->getDisplayName(), "Common Avg Ref");
 }
 
-TEST_F (CommonAverageRefTests, CommonAverageTest)
+TEST_F (CommonAverageRefUnitTests, CommonAverageTest)
 {
     const float sampleRate = 30000;
     const int bufferSize = 50;

@@ -31,14 +31,14 @@
 #include <ProcessorHeaders.h>
 #include <TestFixtures.h>
 
-class SpikeDetectorTests : public ::testing::Test
+class SpikeDetectorUnitTests : public testing::Test
 {
 protected:
-    SpikeDetectorTests()
+    SpikeDetectorUnitTests()
     {
     }
 
-    ~SpikeDetectorTests() override
+    ~SpikeDetectorUnitTests() override
     {
     }
 

@@ -40,7 +40,7 @@ public:
     }
 };
 
-class ParameterOwnerTests : public testing::Test
+class ParameterOwnerUnitTests : public testing::Test
 {
 protected:
     void SetUp() override
@@ -52,7 +52,7 @@ protected:
     std::shared_ptr<MockParameterOwner> owner;
 };
 
-TEST_F(ParameterOwnerTests, addGetParameter)
+TEST_F(ParameterOwnerUnitTests, addGetParameter)
 {
     EXPECT_EQ (owner->getParameter ("Int")->getName(), "Int");
     EXPECT_TRUE (owner->getParameter ("Int")->getDefaultValue().equals(var(0)));
@@ -87,7 +87,7 @@ TEST_F(ParameterOwnerTests, addGetParameter)
     EXPECT_EQ (owner->getParameter ("String")->getDescription(), "String");
 }
 
-TEST_F(ParameterOwnerTests, hasParameter)
+TEST_F(ParameterOwnerUnitTests, hasParameter)
 {
     EXPECT_TRUE (owner->hasParameter ("Int"));
     EXPECT_TRUE (owner->hasParameter ("Float"));
@@ -95,13 +95,13 @@ TEST_F(ParameterOwnerTests, hasParameter)
     EXPECT_TRUE (owner->hasParameter ("String"));
 }
 
-TEST_F(ParameterOwnerTests, getParameters)
+TEST_F(ParameterOwnerUnitTests, getParameters)
 {
     auto parameters = owner->getParameters();
     EXPECT_EQ (parameters.size(), 4);
 }
 
-TEST_F(ParameterOwnerTests, getParameterNames)
+TEST_F(ParameterOwnerUnitTests, getParameterNames)
 {
     auto names = owner->getParameterNames();
     EXPECT_EQ (names.size(), 4);
@@ -111,7 +111,7 @@ TEST_F(ParameterOwnerTests, getParameterNames)
     EXPECT_EQ (names[3], String ("String"));
 }
 
-TEST_F(ParameterOwnerTests, copyParameters)
+TEST_F(ParameterOwnerUnitTests, copyParameters)
 {
     MockParameterOwner other;
     owner->copyParameters (&other);
@@ -124,7 +124,7 @@ TEST_F(ParameterOwnerTests, copyParameters)
     EXPECT_EQ (parameters[3]->getName(), String("String"));
 }
 
-TEST_F(ParameterOwnerTests, bracketOperator)
+TEST_F(ParameterOwnerUnitTests, bracketOperator)
 {
     EXPECT_TRUE (owner->operator[] ("Int").equals(var(0)));
     EXPECT_TRUE (owner->operator[] ("Float").equals(var(0.0f)));
@@ -132,7 +132,7 @@ TEST_F(ParameterOwnerTests, bracketOperator)
     EXPECT_TRUE (owner->operator[] ("String").equals(var("String")));
 }
 
-TEST_F(ParameterOwnerTests, setGetColour)
+TEST_F(ParameterOwnerUnitTests, setGetColour)
 {
     owner->setColour ("Int", Colours::red);
     owner->setColour ("Float", Colours::green);
@@ -145,12 +145,12 @@ TEST_F(ParameterOwnerTests, setGetColour)
     EXPECT_EQ (owner->getColour ("String"), Colours::yellow);
 }
 
-TEST_F(ParameterOwnerTests, numParameters)
+TEST_F(ParameterOwnerUnitTests, numParameters)
 {
     EXPECT_EQ (owner->numParameters(), 4);
 }
 
-TEST_F(ParameterOwnerTests, customCopyConstructor)
+TEST_F(ParameterOwnerUnitTests, customCopyConstructor)
 {
     MockParameterOwner other (*owner);
     auto parameters = other.getParameters();
@@ -158,7 +158,7 @@ TEST_F(ParameterOwnerTests, customCopyConstructor)
     EXPECT_EQ (other.getType(), ParameterOwner::Type::CONTINUOUS_CHANNEL);
 }
 
-TEST_F(ParameterOwnerTests, getType)
+TEST_F(ParameterOwnerUnitTests, getType)
 {
     EXPECT_EQ (owner->getType(), ParameterOwner::Type::CONTINUOUS_CHANNEL);
 }

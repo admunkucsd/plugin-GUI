@@ -15,13 +15,13 @@ public:
     int numCalls = 0;
 };
 
-class ChangeListenerTest : public testing::Test
+class ChangeListenerUnitTests : public testing::Test
 {
 protected:
     MockChangeListener listener;
 };
 
-TEST_F (ChangeListenerTest, ChangeListenerCallback)
+TEST_F (ChangeListenerUnitTests, ChangeListenerCallback)
 {
     listener.changeListenerCallback (nullptr);
 

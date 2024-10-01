@@ -16,7 +16,7 @@
 		DataStream* stream;
 	};
 */
-class ContinuousChannelTests : public testing::Test
+class ContinuousChannelUnitTests : public testing::Test
 {
 protected:
     void SetUp() override
@@ -51,7 +51,7 @@ protected:
 Continuous Channel should be able to set the bitVolts value for the channel
 and also retrieve the bitVolts value for the channel.
 */
-TEST_F(ContinuousChannelTests, SetGetBitVolts)
+TEST_F(ContinuousChannelUnitTests, SetGetBitVolts)
 {
     // Set the bitVolts value for the channel
     continuousChannel->setBitVolts(0.5f);
@@ -64,7 +64,7 @@ TEST_F(ContinuousChannelTests, SetGetBitVolts)
 Continuous Channel should be able to set the unit string 
 and also retrieve the unit string.
 */
-TEST_F(ContinuousChannelTests, SetGetUnits)
+TEST_F(ContinuousChannelUnitTests, SetGetUnits)
 {
     // Set the unit string
     continuousChannel->setUnits("mV");
@@ -76,7 +76,7 @@ TEST_F(ContinuousChannelTests, SetGetUnits)
 /*
 Continuous Channel should be able to get the channel type.
 */
-TEST_F(ContinuousChannelTests, GetChannelType)
+TEST_F(ContinuousChannelUnitTests, GetChannelType)
 {
     EXPECT_EQ(continuousChannel->getChannelType(), ContinuousChannel::Type::ELECTRODE);
 }

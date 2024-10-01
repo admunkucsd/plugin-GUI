@@ -17,7 +17,7 @@ public:
 };
 
 
-class MidiBufferTests : public testing::Test
+class MidiBufferUnitTests : public testing::Test
 {
 protected:
     void SetUp() override
@@ -76,7 +76,7 @@ protected:
 The Midi Buffer encodes Metadata as raw byte data and provides an iterator for processing separate blocks of data. 
 This test verifies that multiple Metadata objects inserted into the Midi Buffer are recoverable.
 */
-TEST_F(MidiBufferTests, ReadWrite)
+TEST_F(MidiBufferUnitTests, ReadWrite)
 {
     GTEST_SKIP() << "Fix";
 
@@ -107,7 +107,7 @@ TEST_F(MidiBufferTests, ReadWrite)
 /*
 Clear the Midi Buffer and verify that the buffer is empty.
 */
-TEST_F(MidiBufferTests, Clear)
+TEST_F(MidiBufferUnitTests, Clear)
 {
     size_t size = event->getChannelInfo()->getDataSize() + 
         event->getChannelInfo()->getTotalEventMetadataSize() + 
@@ -129,7 +129,7 @@ TEST_F(MidiBufferTests, Clear)
 /*
 Adding an event to the Midi buffer should correctly increment the number of events in the buffer.
 */ 
-TEST_F(MidiBufferTests, AddEvent)
+TEST_F(MidiBufferUnitTests, AddEvent)
 {
     size_t size = event->getChannelInfo()->getDataSize() + 
         event->getChannelInfo()->getTotalEventMetadataSize() + 
@@ -149,7 +149,7 @@ TEST_F(MidiBufferTests, AddEvent)
 /*
 Should be able to add events from another buffer to the Midi Buffer.
 */
-TEST_F(MidiBufferTests, AddBuffer)
+TEST_F(MidiBufferUnitTests, AddBuffer)
 {
     size_t size = event->getChannelInfo()->getDataSize() + 
         event->getChannelInfo()->getTotalEventMetadataSize() + 

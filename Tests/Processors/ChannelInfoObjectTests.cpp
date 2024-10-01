@@ -17,7 +17,7 @@ public:
     }
 };
 
-TEST (ChannelInfoObjectTests, GetSampleRate)
+TEST (ChannelInfoObjectUnitTests, GetSampleRate)
 {
     // Arrange
     float expectedSampleRate = 44100.0f;
@@ -33,7 +33,7 @@ TEST (ChannelInfoObjectTests, GetSampleRate)
     EXPECT_EQ (expectedSampleRate, actualSampleRate);
 }
 
-TEST (ChannelInfoObjectTests, GetStreamId)
+TEST (ChannelInfoObjectUnitTests, GetStreamId)
 {
     // Arrange
     DataStream::Settings settings;
@@ -48,7 +48,7 @@ TEST (ChannelInfoObjectTests, GetStreamId)
     EXPECT_EQ (expectedStreamId, actualStreamId);
 }
 
-TEST (ChannelInfoObjectTests, GetStreamName)
+TEST (ChannelInfoObjectUnitTests, GetStreamName)
 {
     // Arrange
     DataStream::Settings settings {
@@ -65,7 +65,7 @@ TEST (ChannelInfoObjectTests, GetStreamName)
     EXPECT_EQ (expectedStreamName, actualStreamName);
 }
 
-TEST (ChannelInfoObjectTests, SetDataStream_AddsToStream)
+TEST (ChannelInfoObjectUnitTests, SetDataStreamAddsToStream)
 {
     // Arrange
     DataStream stream ({});
@@ -78,7 +78,7 @@ TEST (ChannelInfoObjectTests, SetDataStream_AddsToStream)
     EXPECT_EQ (&stream, channel.getStream());
 }
 
-TEST (ChannelInfoObjectTests, SetDataStream_DoesNotAddToStream)
+TEST (ChannelInfoObjectUnitTests, SetDataStreamDoesNotAddToStream)
 {
     // Arrange
     DataStream stream ({});
@@ -91,7 +91,7 @@ TEST (ChannelInfoObjectTests, SetDataStream_DoesNotAddToStream)
     EXPECT_TRUE (channel.getStream()->getContinuousChannels().isEmpty());
 }
 
-TEST (ChannelInfoObjectTests, IsRecorded_DefaultValueIsFalse)
+TEST (ChannelInfoObjectUnitTests, IsRecordedDefaultValueIsFalse)
 {
     // Arrange
     DataStream stream ({});

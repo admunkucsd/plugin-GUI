@@ -31,14 +31,14 @@
 #include <ProcessorHeaders.h>
 #include <TestFixtures.h>
 
-class PhaseDetectorTests : public ::testing::Test
+class PhaseDetectorUnitTests : public testing::Test
 {
 protected:
-    PhaseDetectorTests()
+    PhaseDetectorUnitTests()
     {
     }
 
-    ~PhaseDetectorTests() override
+    ~PhaseDetectorUnitTests() override
     {
     }
 

@@ -76,7 +76,7 @@ public:
 };
 
 // Test fixture for AudioProcessorGraph
-class AudioProcessorGraphTests : public testing::Test
+class AudioProcessorGraphUnitTests : public testing::Test
 {
 protected:
     void SetUp() override
@@ -97,7 +97,7 @@ protected:
 };
 
 // Test case for adding and removing nodes
-TEST_F (AudioProcessorGraphTests, AddAndRemoveNode)
+TEST_F (AudioProcessorGraphUnitTests, AddAndRemoveNode)
 {
     //Add a new node
     auto newNode = graph->addNode (std::make_unique<MockAudioProcessorGraph>(), AudioProcessorGraph::NodeID (0));
@@ -112,7 +112,7 @@ TEST_F (AudioProcessorGraphTests, AddAndRemoveNode)
 }
 
 // Test case for adding and removing connections
-TEST_F (AudioProcessorGraphTests, AddAndRemoveConnection)
+TEST_F (AudioProcessorGraphUnitTests, AddAndRemoveConnection)
 {
     // Arrange
     auto node1 = graph->addNode(std::make_unique<MockAudioProcessor>(), AudioProcessorGraph::NodeID(0));
@@ -139,7 +139,7 @@ TEST_F (AudioProcessorGraphTests, AddAndRemoveConnection)
 }
 
 // Test case for checking if a connection exists
-TEST_F (AudioProcessorGraphTests, IsConnected)
+TEST_F (AudioProcessorGraphUnitTests, IsConnected)
 {
     // Arrange
     auto node1 = graph->addNode (std::make_unique<MockAudioProcessor>(), AudioProcessorGraph::NodeID (0));
@@ -162,7 +162,7 @@ TEST_F (AudioProcessorGraphTests, IsConnected)
 }
 
 // Test case for checking if a node is an input to another node
-TEST_F (AudioProcessorGraphTests, IsAnInputTo)
+TEST_F (AudioProcessorGraphUnitTests, IsAnInputTo)
 {
     // Arrange
     auto node1 = graph->addNode (std::make_unique<MockAudioProcessor>(), AudioProcessorGraph::NodeID (0));
@@ -188,7 +188,7 @@ TEST_F (AudioProcessorGraphTests, IsAnInputTo)
 }
 
 // Test case for checking if a connection is legal
-TEST_F (AudioProcessorGraphTests, IsConnectionLegal)
+TEST_F (AudioProcessorGraphUnitTests, IsConnectionLegal)
 {
     // Arrange
     auto node1 = graph->addNode (std::make_unique<MockAudioProcessor>(), AudioProcessorGraph::NodeID (0));

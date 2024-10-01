@@ -42,7 +42,7 @@ public:
     {}
 };
 
-class DataThreadTests : public testing::Test
+class DataThreadUnitTests : public testing::Test
 {
 protected:
     void SetUp() override
@@ -113,7 +113,7 @@ protected:
     int64_t currentSampleIndex = 0;
 };
 
-TEST_F(DataThreadTests, DataIntegrity)
+TEST_F(DataThreadUnitTests, DataIntegrity)
 {
     GTEST_SKIP() << "Need to fix Audio Editor class as it is causing crashes in headless mode.";
     tester->startAcquisition(false);

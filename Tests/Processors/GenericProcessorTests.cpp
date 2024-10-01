@@ -53,7 +53,7 @@ public:
     }
 };
 
-class GenericProcessorTests : public testing::Test
+class GenericProcessorUnitTests : public testing::Test
 {
 protected:
     void SetUp() override
@@ -73,7 +73,7 @@ Generic Processors copy Data Streams from upstream processors.
 This data is saved internally by Generic Processors so that incoming data can be contextualized. 
 This test verifies that this copying of Data Streams populates the necessary members within a Generic Processor.
 */
-TEST_F (GenericProcessorTests, UnitTest_CopyStreams)
+TEST_F (GenericProcessorUnitTests, CopyStreams)
 {
     processor->update();
     
@@ -85,7 +85,7 @@ TEST_F (GenericProcessorTests, UnitTest_CopyStreams)
 /*
 Generic Processors can retrieve the source node that is connected to them.
 */
-TEST_F (GenericProcessorTests, UnitTest_GetSourceNode)
+TEST_F (GenericProcessorUnitTests, GetSourceNode)
 {
     EXPECT_TRUE(processor->getSourceNode());
 }
@@ -93,7 +93,7 @@ TEST_F (GenericProcessorTests, UnitTest_GetSourceNode)
 /*
 Generic Processors can retrieve the destination node that is connected to them.
 */
-TEST_F (GenericProcessorTests, UnitTest_GetDestinationNode)
+TEST_F (GenericProcessorUnitTests, GetDestinationNode)
 {
     EXPECT_FALSE(processor->getDestNode());
 }
@@ -101,7 +101,7 @@ TEST_F (GenericProcessorTests, UnitTest_GetDestinationNode)
 /*
 Generic Processors can retrieve their name.
 */
-TEST_F (GenericProcessorTests, UnitTest_GetName)
+TEST_F (GenericProcessorUnitTests, GetName)
 {
     EXPECT_EQ(processor->getName(), "MockProcessor");
 }
@@ -109,7 +109,7 @@ TEST_F (GenericProcessorTests, UnitTest_GetName)
 /*
 Generic Processors can be configured to generate timestamps.
 */
-TEST_F (GenericProcessorTests, UnitTest_GeneratesTimestamps)
+TEST_F (GenericProcessorUnitTests, GeneratesTimestamps)
 {
     EXPECT_FALSE(processor->generatesTimestamps());
 }
@@ -117,7 +117,7 @@ TEST_F (GenericProcessorTests, UnitTest_GeneratesTimestamps)
 /*
 Generic Processors ccan get and set their node ID.
 */
-TEST_F (GenericProcessorTests, UnitTest_GetSetNodeId)
+TEST_F (GenericProcessorUnitTests, GetSetNodeId)
 {
     processor->setNodeId(1);
     EXPECT_EQ(processor->getNodeId(), 1);
@@ -126,7 +126,7 @@ TEST_F (GenericProcessorTests, UnitTest_GetSetNodeId)
 /*
 Generic Processors can add boolean parameters.
 */
-TEST_F (GenericProcessorTests, UnitTest_AddBooleanParameter)
+TEST_F (GenericProcessorUnitTests, AddBooleanParameter)
 {
     String name = "param";
     String displayName = "param";

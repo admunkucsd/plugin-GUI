@@ -32,7 +32,7 @@
 #include <TestFixtures.h>
 #include <filesystem>
 
-class ChannelMapTests : public ::testing::Test
+class ChannelMapUnitTests : public testing::Test
 {
 protected:
     void SetUp() override
@@ -66,7 +66,7 @@ protected:
     std::filesystem::path prbFilePath;
 };
 
-TEST_F (ChannelMapTests, TestRemapsChannels)
+TEST_F (ChannelMapUnitTests, TestRemapsChannels)
 {
     // Make it backwards:
     juce::Array<int> newChanOrder;
@@ -93,7 +93,7 @@ TEST_F (ChannelMapTests, TestRemapsChannels)
     }
 }
 
-TEST_F (ChannelMapTests, TestRespectsEnabledChannels)
+TEST_F (ChannelMapUnitTests, TestRespectsEnabledChannels)
 {
     int expectedMappedNumChans = 4;
     // Make it backwards:
@@ -133,7 +133,7 @@ TEST_F (ChannelMapTests, TestRespectsEnabledChannels)
     }
 }
 
-TEST_F (ChannelMapTests, ConfigFileTest)
+TEST_F (ChannelMapUnitTests, ConfigFileTest)
 {
     std::vector<std::string> prbFileContentsList = {
         "{",

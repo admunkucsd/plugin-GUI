@@ -13,7 +13,7 @@
 #include <filesystem>
 #include <algorithm>
 
-class RecordNodeTests :  public testing::Test {
+class RecordNodeUnitTests :  public testing::Test {
 protected:
     void SetUp() override {
         numChannels = 8;
@@ -218,7 +218,7 @@ protected:
     float sampleRate = 1.0;
 };
 
-TEST_F(RecordNodeTests, TestInputOutput_Continuous_Single) {
+TEST_F(RecordNodeUnitTests, TestInputOutput_Continuous_Single) {
     GTEST_SKIP() << "Need headless mode support.";
     int numSamples = 100;
     tester->startAcquisition(true);
@@ -245,7 +245,7 @@ TEST_F(RecordNodeTests, TestInputOutput_Continuous_Single) {
     }
 }
 
-TEST_F(RecordNodeTests, TestInputOutput_Continuous_Multiple) {
+TEST_F(RecordNodeUnitTests, TestInputOutput_Continuous_Multiple) {
     GTEST_SKIP() << "Need headless mode support.";
     tester->startAcquisition(true);
 
@@ -278,7 +278,7 @@ TEST_F(RecordNodeTests, TestInputOutput_Continuous_Multiple) {
     }
 }
 
-TEST_F(RecordNodeTests, TestEmpty) {
+TEST_F(RecordNodeUnitTests, TestEmpty) {
     GTEST_SKIP() << "Need headless mode support.";
     tester->startAcquisition(true);
     tester->stopAcquisition();
@@ -288,7 +288,7 @@ TEST_F(RecordNodeTests, TestEmpty) {
     ASSERT_EQ(persistedData.size(), 0);
 }
 
-TEST_F(RecordNodeTests, TestClipsProperly) {
+TEST_F(RecordNodeUnitTests, TestClipsProperly) {
     GTEST_SKIP() << "Need headless mode support.";
     int numSamples = 100;
     tester->startAcquisition(true);
@@ -336,10 +336,10 @@ TEST_F(RecordNodeTests, TestClipsProperly) {
     }
 }
 
-class CustomBitVolts_RecordNodeTests : public RecordNodeTests {
+class CustomBitVolts_RecordNodeTests : public RecordNodeUnitTests {
     void SetUp() override {
         bitVolts = 0.195;
-        RecordNodeTests::SetUp();
+        RecordNodeUnitTests::SetUp();
     }
 };
 
@@ -374,7 +374,7 @@ TEST_F(CustomBitVolts_RecordNodeTests, Test_RespectsBitVolts) {
     }
 }
 
-TEST_F(RecordNodeTests, Test_PersistsSampleNumbersAndTimestamps) {
+TEST_F(RecordNodeUnitTests, Test_PersistsSampleNumbersAndTimestamps) {
     GTEST_SKIP() << "Need headless mode support.";
     tester->startAcquisition(true);
 
@@ -422,7 +422,7 @@ TEST_F(RecordNodeTests, Test_PersistsSampleNumbersAndTimestamps) {
     compareBinaryFilesHex("timestamps.npy", timeStampsBin, expectedTimeStampsHex);
 }
 
-TEST_F(RecordNodeTests, Test_PersistsStructureOeBin) {
+TEST_F(RecordNodeUnitTests, Test_PersistsStructureOeBin) {
     GTEST_SKIP() << "Need headless mode support.";
     tester->startAcquisition(true);
 
@@ -482,7 +482,7 @@ TEST_F(RecordNodeTests, Test_PersistsStructureOeBin) {
     ASSERT_EQ(jsonContinuousChannel["channel_name"].toString(), juce::String("CH0"));
 }
 
-TEST_F(RecordNodeTests, Test_PersistsEvents) {
+TEST_F(RecordNodeUnitTests, Test_PersistsEvents) {
     GTEST_SKIP() << "Need headless mode support.";
     processor->setRecordEvents(true);
     processor->updateSettings();

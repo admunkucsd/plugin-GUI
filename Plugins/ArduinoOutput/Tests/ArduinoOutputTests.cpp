@@ -31,14 +31,14 @@
 #include <ProcessorHeaders.h>
 #include <TestFixtures.h>
 
-class ArduinoOutputTests : public ::testing::Test
+class ArduinoOutputUnitTests : public testing::Test
 {
 protected:
-    ArduinoOutputTests()
+    ArduinoOutputUnitTests()
     {
     }
 
-    ~ArduinoOutputTests() override
+    ~ArduinoOutputUnitTests() override
     {
     }
 

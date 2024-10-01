@@ -26,7 +26,7 @@ public:
     {}
 };
 
-class EventTests : public testing::Test
+class EventUnitTests : public testing::Test
 {
 protected:
     void SetUp() override
@@ -116,7 +116,7 @@ protected:
 /*
 Event should return the correct event type.
 */
-TEST_F(EventTests, GetEventType)
+TEST_F(EventUnitTests, GetEventType)
 {
     EXPECT_EQ(event->getEventType(), EventChannel::Type::TTL);
     EXPECT_EQ(ttlEvent->getEventType(), EventChannel::Type::TTL);
@@ -127,7 +127,7 @@ TEST_F(EventTests, GetEventType)
 /*
 Event should return the correct EventChannel info object.
 */
-TEST_F(EventTests, GetEventChannelInfo)
+TEST_F(EventUnitTests, GetEventChannelInfo)
 {
     EXPECT_EQ(event->getChannelInfo(), eventChannel["Event"].get());
     EXPECT_EQ(ttlEvent->getChannelInfo(), eventChannel["TTL"].get());
@@ -138,7 +138,7 @@ TEST_F(EventTests, GetEventChannelInfo)
 /*
 Events should should correctly be serialized and deserialized.
 */
-TEST_F(EventTests, SerializeDeserializeEvent)
+TEST_F(EventUnitTests, SerializeDeserializeEvent)
 {
     // TTLEvent
     {
@@ -200,7 +200,7 @@ TEST_F(EventTests, SerializeDeserializeEvent)
 /*
 TTLEvent should return the correct state.
 */
-TEST_F(EventTests, GetState)
+TEST_F(EventUnitTests, GetState)
 {
     EXPECT_EQ(ttlEvent->getState(), true);
 }
@@ -208,7 +208,7 @@ TEST_F(EventTests, GetState)
 /*
 TTLEvent should return the correct line.
 */
-TEST_F(EventTests, GetLine)
+TEST_F(EventUnitTests, GetLine)
 {
     EXPECT_EQ(ttlEvent->getLine(), 0);
 }
@@ -216,7 +216,7 @@ TEST_F(EventTests, GetLine)
 /*
 TTLEvent should return the correct word.
 */
-TEST_F(EventTests, GetWord)
+TEST_F(EventUnitTests, GetWord)
 {
     EXPECT_EQ(ttlEvent->getWord(), true);
 }
@@ -224,7 +224,7 @@ TEST_F(EventTests, GetWord)
 /*
 TextEvent should return the correct text.
 */
-TEST_F(EventTests, GetText)
+TEST_F(EventUnitTests, GetText)
 {
     EXPECT_EQ(textEvent->getText(), "Text");
 }
@@ -232,7 +232,7 @@ TEST_F(EventTests, GetText)
 /*
 BinaryEvent should return the correct type.
 */
-TEST_F(EventTests, GetBinaryType)
+TEST_F(EventUnitTests, GetBinaryType)
 {
     EXPECT_EQ(binaryEvent->getBinaryType(), EventChannel::BinaryDataType::FLOAT_ARRAY);
 }
@@ -240,7 +240,7 @@ TEST_F(EventTests, GetBinaryType)
 /*
 BinaryEvent should return the correct data.
 */
-TEST_F(EventTests, GetBinaryDataPointer)
+TEST_F(EventUnitTests, GetBinaryDataPointer)
 {
     const float* data = static_cast<const float*>(binaryEvent->getBinaryDataPointer());
 

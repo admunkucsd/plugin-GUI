@@ -15,7 +15,7 @@ public:
     int numCalls = 0;
 };
 
-class ChangeBroadcasterTests : public testing::Test
+class ChangeBroadcasterUnitTests : public testing::Test
 {
 protected:
     void SetUp() override
@@ -29,7 +29,7 @@ protected:
     }
 };
 
-TEST_F (ChangeBroadcasterTests, RemoveChangeListener)
+TEST_F (ChangeBroadcasterUnitTests, RemoveChangeListener)
 {
     ChangeBroadcaster broadcaster;
     MockChangeListener listener;
@@ -42,7 +42,7 @@ TEST_F (ChangeBroadcasterTests, RemoveChangeListener)
     EXPECT_EQ(listener.numCalls, 0);
 }
 
-TEST_F (ChangeBroadcasterTests, RemoveAllChangeListeners)
+TEST_F (ChangeBroadcasterUnitTests, RemoveAllChangeListeners)
 {
     ChangeBroadcaster broadcaster;
     MockChangeListener listener1;
@@ -58,7 +58,7 @@ TEST_F (ChangeBroadcasterTests, RemoveAllChangeListeners)
     EXPECT_EQ(listener2.numCalls, 0);
 }
 
-TEST_F (ChangeBroadcasterTests, SendSynchronousChangeMessage)
+TEST_F (ChangeBroadcasterUnitTests, SendSynchronousChangeMessage)
 {
     ChangeBroadcaster broadcaster;
     MockChangeListener listener;
@@ -69,7 +69,7 @@ TEST_F (ChangeBroadcasterTests, SendSynchronousChangeMessage)
     EXPECT_EQ(listener.numCalls, 1);
 }
 
-TEST_F (ChangeBroadcasterTests, DispatchPendingMessages)
+TEST_F (ChangeBroadcasterUnitTests, DispatchPendingMessages)
 {
     ChangeBroadcaster broadcaster;
     MockChangeListener listener;

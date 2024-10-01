@@ -4,7 +4,7 @@
 #include <Processors/MessageCenter/MessageCenter.h>
 #include <memory>
 
-class MessageCenterTests : public testing::Test
+class MessageCenterUnitTests : public testing::Test
 {
 protected:
     void SetUp() override
@@ -16,29 +16,29 @@ protected:
     std::unique_ptr<MessageCenter> messageCenter;
 };
 
-TEST_F(MessageCenterTests, Constructor)
+TEST_F(MessageCenterUnitTests, Constructor)
 {
     EXPECT_EQ(messageCenter->getName(), "Message Center");
 }
 
-TEST_F(MessageCenterTests, AddSpecialProcessorChannels)
+TEST_F(MessageCenterUnitTests, AddSpecialProcessorChannels)
 {
     messageCenter->addSpecialProcessorChannels();
     EXPECT_EQ(messageCenter->getDataStreams().size(), 1);
     EXPECT_EQ(messageCenter->getEventChannels().size(), 1);
 }
 
-TEST_F(MessageCenterTests, GetMessageChannel)
+TEST_F(MessageCenterUnitTests, GetMessageChannel)
 {
     EXPECT_EQ(messageCenter->getMessageChannel(), nullptr);
 }
 
-TEST_F(MessageCenterTests, GetMessageStream)
+TEST_F(MessageCenterUnitTests, GetMessageStream)
 {
     EXPECT_EQ(messageCenter->getMessageStream(), nullptr);
 }
 
-TEST_F(MessageCenterTests, AddOutgoingMessage)
+TEST_F(MessageCenterUnitTests, AddOutgoingMessage)
 {
     GTEST_SKIP() << "Need headless support for MessageCenter";
 
@@ -49,7 +49,7 @@ TEST_F(MessageCenterTests, AddOutgoingMessage)
     EXPECT_EQ(savedMsg, "Test Message");
 }
 
-TEST_F(MessageCenterTests, AddSavedMessage)
+TEST_F(MessageCenterUnitTests, AddSavedMessage)
 {
     GTEST_SKIP() << "Need headless support for MessageCenter";
 
@@ -60,7 +60,7 @@ TEST_F(MessageCenterTests, AddSavedMessage)
     EXPECT_EQ(savedMsg, "Test Message");
 }
 
-TEST_F(MessageCenterTests, ClearSavedMessages)
+TEST_F(MessageCenterUnitTests, ClearSavedMessages)
 {
     GTEST_SKIP() << "Need headless support for MessageCenter";
 

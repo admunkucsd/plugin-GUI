@@ -8,7 +8,7 @@ The Plugin Manager will be passed an absolute path to a DLL containing a Plugin 
 The Plugin Manager should load the DLL without warning or errors. 
 The Plugin Manager should record library information from the DLL that will be verified.
 */
-TEST(PluginManagerTest, PluginLoading)
+TEST(PluginManagerUnitTests, PluginLoading)
 {
     PluginManager pluginManager;
 
@@ -28,7 +28,7 @@ A Plugin Description will be passed to the Plugin Manager,
 which will output an instance of the Processor by 
 locating the associated Library Info object containing the Processor's constructor.
 */
-TEST(PluginManagerTest, PluginCreation)
+TEST(PluginManagerUnitTests, PluginCreation)
 {
     PluginManager pluginManager;
 
@@ -44,7 +44,7 @@ TEST(PluginManagerTest, PluginCreation)
     EXPECT_EQ(processorInfo.type, Plugin::Processor::SINK);
 }
 
-TEST(PluginManagerTest, getLibraryIndexFromPlugin)
+TEST(PluginManagerUnitTests, getLibraryIndexFromPlugin)
 {
     PluginManager pluginManager;
 
@@ -59,7 +59,7 @@ TEST(PluginManagerTest, getLibraryIndexFromPlugin)
     EXPECT_EQ(pluginManager.getLibraryIndexFromPlugin(type, idx), 0);
 }
 
-TEST(PluginManagerTest, removePlugin)
+TEST(PluginManagerUnitTests, removePlugin)
 {
     PluginManager pluginManager;
 

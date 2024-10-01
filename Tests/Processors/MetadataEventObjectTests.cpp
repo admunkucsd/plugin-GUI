@@ -10,7 +10,7 @@ public:
 };
 
 // Test fixture for MetadataEventObject
-class MetadataEventObjectTests : public ::testing::Test
+class MetadataEventObjectUnitTests : public testing::Test
 {
 protected:
     void SetUp() override
@@ -30,7 +30,7 @@ protected:
 };
 
 // Test adding event metadata
-TEST_F (MetadataEventObjectTests, AddEventMetadata)
+TEST_F (MetadataEventObjectUnitTests, AddEventMetadata)
 {
     // Create a metadata descriptor
     MetadataDescriptor::MetadataType type = MetadataDescriptor::INT32;
@@ -51,7 +51,7 @@ TEST_F (MetadataEventObjectTests, AddEventMetadata)
 }
 
 // Test finding event metadata
-TEST_F (MetadataEventObjectTests, FindEventMetadata)
+TEST_F (MetadataEventObjectUnitTests, FindEventMetadata)
 {
     // Create metadata descriptors
     MetadataDescriptor::MetadataType type1 = MetadataDescriptor::INT32;
@@ -82,7 +82,7 @@ TEST_F (MetadataEventObjectTests, FindEventMetadata)
 }
 
 // Test getting total event metadata size
-TEST_F (MetadataEventObjectTests, GetTotalEventMetadataSize)
+TEST_F (MetadataEventObjectUnitTests, GetTotalEventMetadataSize)
 {
     // Create metadata descriptors
     MetadataDescriptor::MetadataType type1 = MetadataDescriptor::INT32;
@@ -112,7 +112,7 @@ TEST_F (MetadataEventObjectTests, GetTotalEventMetadataSize)
 }
 
 // Test getting the maximum event metadata size
-TEST_F (MetadataEventObjectTests, GetMaxEventMetadataSize)
+TEST_F (MetadataEventObjectUnitTests, GetMaxEventMetadataSize)
 {
     // Create metadata descriptors
     MetadataDescriptor::MetadataType type1 = MetadataDescriptor::INT32;
@@ -142,7 +142,7 @@ TEST_F (MetadataEventObjectTests, GetMaxEventMetadataSize)
 }
 
 // Test checking if two MetadataEventObjects have the same event metadata
-TEST_F (MetadataEventObjectTests, HasSameEventMetadata)
+TEST_F (MetadataEventObjectUnitTests, HasSameEventMetadata)
 {
     // Create metadata descriptors
     MetadataDescriptor::MetadataType type1 = MetadataDescriptor::INT32;
@@ -174,7 +174,7 @@ TEST_F (MetadataEventObjectTests, HasSameEventMetadata)
 }
 
 // Test checking if two MetadataEventObjects have similar event metadata
-TEST_F (MetadataEventObjectTests, HasSimilarEventMetadata)
+TEST_F (MetadataEventObjectUnitTests, HasSimilarEventMetadata)
 {
     // Create metadata descriptors
     MetadataDescriptor::MetadataType type1 = MetadataDescriptor::INT32;

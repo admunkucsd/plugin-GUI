@@ -9,7 +9,7 @@ The Data Buffer will attempt to copy the maximum number of samples,
 dependent on the number of samples within the Data Buffer and the size of the Audio Buffer.
 This test verifies that the Data Buffer can successfully perform this copy.
 */
-TEST(DataBufferTest, CopyToAudioBuffer)
+TEST(DataBufferUnitTests, CopyToAudioBuffer)
 {
     // Create a Data Buffer with 1 channel and 10 samples
     constexpr int numItems = 10;

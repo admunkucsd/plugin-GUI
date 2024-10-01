@@ -31,14 +31,14 @@
 #include <ProcessorHeaders.h>
 #include <TestFixtures.h>
 
-class RecordControlTests : public ::testing::Test
+class RecordControlUnitTests : public testing::Test
 {
 protected:
-    RecordControlTests()
+    RecordControlUnitTests()
     {
     }
 
-    ~RecordControlTests() override
+    ~RecordControlUnitTests() override
     {
     }
 

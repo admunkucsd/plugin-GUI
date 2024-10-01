@@ -149,7 +149,7 @@ public:
     int width;
 };
 
-class LfpDisplayNodeTests : public testing::Test
+class LfpDisplayNodeUnitTests : public testing::Test
 {
 protected:
     void SetUp() override
@@ -300,7 +300,7 @@ protected:
     int y;
 };
 
-TEST_F (LfpDisplayNodeTests, VisualIntegrityTest)
+TEST_F (LfpDisplayNodeUnitTests, VisualIntegrityTest)
 {
     const int canvasX = 600;
     const int canvasY = 800;
@@ -370,7 +370,7 @@ TEST_F (LfpDisplayNodeTests, VisualIntegrityTest)
     tester->stopAcquisition();
 }
 
-TEST_F (LfpDisplayNodeTests, DataIntegrityTest)
+TEST_F (LfpDisplayNodeUnitTests, DataIntegrityTest)
 {
     int numSamples = 100;
     tester->startAcquisition (false);

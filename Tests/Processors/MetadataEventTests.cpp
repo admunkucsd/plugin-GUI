@@ -12,7 +12,7 @@ public:
     }
 };
 
-class MetadataEventTests : public testing::Test
+class MetadataEventUnitTests : public testing::Test
 {
 protected:
     void SetUp() override
@@ -24,12 +24,12 @@ protected:
     std::unique_ptr<MockMetadataEvent> metadataEvent;
 };
 
-TEST_F(MetadataEventTests, getMetadataValueCount)
+TEST_F(MetadataEventUnitTests, getMetadataValueCount)
 {
     EXPECT_EQ(metadataEvent->getMetadataValueCount(), 1);
 }
 
-TEST_F(MetadataEventTests, getMetadataValue)
+TEST_F(MetadataEventUnitTests, getMetadataValue)
 {
     const MetadataValue* value = metadataEvent->getMetadataValue(0);
     EXPECT_EQ (value->getDataType(), MetadataDescriptor::MetadataType::CHAR);

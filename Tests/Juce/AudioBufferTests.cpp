@@ -8,7 +8,7 @@ Size parameters will passed that will define the number of channels and samples 
 Data will then be written to the buffer using the buffer’s write pointers. 
 The written data will be verified through the buffer’s read pointers.
 */
-TEST(AudioBufferTest, ReadWrite)
+TEST(AudioBufferUnitTests, ReadWrite)
 {
     // Create an AudioBuffer with 2 channels and 10 samples
     AudioBuffer<float> buffer(2, 10);
@@ -32,7 +32,7 @@ TEST(AudioBufferTest, ReadWrite)
 The Audio Buffer defines an explicit method for copying data from a different Audio Buffer to itself.
 This test will verify that an empty buffer can successfully copy data from an Audio Buffer with existing data.
 */
-TEST(AudioBufferTest, MakeCopy)
+TEST(AudioBufferUnitTests, MakeCopy)
 {
     // Create an AudioBuffer with 2 channels and 10 samples
     AudioBuffer<float> buffer(2, 10);
@@ -62,7 +62,7 @@ TEST(AudioBufferTest, MakeCopy)
 Audio Buffers can append samples for a channel from a different Audio Buffer to itself. 
 This test will verify that channel data can successfully be appended from an Audio Buffer with existing data.
 */
-TEST(AudioBufferTest, AddFrom)
+TEST(AudioBufferUnitTests, AddFrom)
 {
     // Create an AudioBuffer with 2 channels and 10 samples
     AudioBuffer<float> buffer(2, 10);
@@ -96,7 +96,7 @@ TEST(AudioBufferTest, AddFrom)
 Audio Buffers can copy samples for a channel from a different Audio Buffer to itself. 
 This test will verify that channel data can successfully be copied from an Audio Buffer with existing data.
 */
-TEST(AudioBufferTest, CopyFrom)
+TEST(AudioBufferUnitTests, CopyFrom)
 {
     // Create an AudioBuffer with 2 channels and 10 samples
     AudioBuffer<float> buffer(2, 10);

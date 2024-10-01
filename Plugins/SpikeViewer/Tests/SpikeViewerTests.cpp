@@ -8,14 +8,14 @@
 #include <ProcessorHeaders.h>
 #include <TestFixtures.h>
 
-class SpikeViewerTests : public ::testing::Test
+class SpikeViewerUnitTests : public testing::Test
 {
 protected:
-    SpikeViewerTests()
+    SpikeViewerUnitTests()
     {
     }
 
-    ~SpikeViewerTests() override
+    ~SpikeViewerUnitTests() override
     {
     }
 
