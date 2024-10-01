@@ -710,7 +710,6 @@ void CustomLookAndFeel::drawMenuBarBackground (Graphics& g, int width, int heigh
     Rectangle<int> r (1, 0, width - 2, height);
 
     g.setColour (colour.contrasting (0.15f));
-    g.fillRect (r.removeFromTop (1));
     g.fillRect (r.removeFromBottom (1));
 
     g.setGradientFill (ColourGradient::vertical (colour, 0, colour.darker (0.2f), (float) height));
@@ -721,14 +720,14 @@ void CustomLookAndFeel::drawMenuBarBackground (Graphics& g, int width, int heigh
         g.setColour (findColour (ThemeColours::defaultText));
         String ver = "v" + String (ProjectInfo::versionString);
         g.setFont (getCommonMenuFont());
-        int verStrWidth = getCommonMenuFont().getStringWidth (ver);
+        int verStrWidth = GlyphArrangement::getStringWidthInt (getCommonMenuFont(), ver);
         g.drawText (ver, width - verStrWidth - 10, 0, verStrWidth, height, Justification::centred);
     }
 }
 
 Font CustomLookAndFeel::getMenuBarFont (MenuBarComponent& menuBar, int /*itemIndex*/, const String& /*itemText*/)
 {
-    return Font ( FontOptions ( getCommonMenuFont().getTypefaceName(), "Medium", menuBar.getHeight() * 0.65f));
+    return Font (FontOptions (getCommonMenuFont().getTypefaceName(), "Medium", menuBar.getHeight() * 0.65f));
 }
 
 //==================================================================
@@ -1063,13 +1062,18 @@ void CustomLookAndFeel::drawDocumentWindowTitleBar (DocumentWindow& window, Grap
 
     auto isActive = window.isActiveWindow();
 
-    g.setColour (findColour (ThemeColours::componentParentBackground));
-    g.fillAll();
+    const Colour colour (findColour (ThemeColours::componentParentBackground));
 
-    Font font (withDefaultMetrics (FontOptions ("Inter", "Bold", (float) h * 0.65f)));
+    g.setGradientFill (ColourGradient::vertical (colour, 0, colour.darker (0.2f), (float) h));
+    g.fillRect (0, 0, w, h);
+
+    g.setColour (colour.contrasting (0.15f));
+    g.fillRect (0, h - 1, w, 1);
+
+    Font font (withDefaultMetrics (FontOptions ("Inter", "Semi Bold", (float) h * 0.65f)));
     g.setFont (font);
 
-    auto textW = font.getStringWidth (window.getName());
+    auto textW = GlyphArrangement::getStringWidthInt (font, window.getName());
     auto iconW = 0;
     auto iconH = 0;
 
@@ -1079,7 +1083,7 @@ void CustomLookAndFeel::drawDocumentWindowTitleBar (DocumentWindow& window, Grap
         iconW = icon->getWidth() * iconH / icon->getHeight() + 4;
     }
 
-    textW = jmin (titleSpaceW, textW + iconW);
+    textW = jmin (titleSpaceW, textW + iconW + 4);
     auto textX = drawTitleTextOnLeft ? titleSpaceX
                                      : jmax (titleSpaceX, (w - textW) / 2);
 
@@ -1090,7 +1094,7 @@ void CustomLookAndFeel::drawDocumentWindowTitleBar (DocumentWindow& window, Grap
     {
         g.setOpacity (isActive ? 1.0f : 0.6f);
         g.drawImageWithin (*icon, textX, (h - iconH) / 2, iconW, iconH, RectanglePlacement::centred, false);
-        textX += iconW;
+        textX += iconW + 4;
         textW -= iconW;
     }
 
@@ -1123,7 +1127,7 @@ int CustomLookAndFeel::getTabButtonSpaceAroundImage()
 
 int CustomLookAndFeel::getTabButtonBestWidth (TabBarButton& button, int tabDepth)
 {
-    int width = Font ( FontOptions( (float) tabDepth * 0.7f)).getStringWidth (button.getButtonText().trim())
+    int width = GlyphArrangement::getStringWidth (Font (FontOptions ((float) tabDepth * 0.7f)), (button.getButtonText().trim()))
                 + getTabButtonOverlap (tabDepth) * 2 + 15;
 
     if (auto* extraComponent = button.getExtraComponent())

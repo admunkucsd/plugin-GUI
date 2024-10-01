@@ -173,7 +173,7 @@ void ProcessorList::drawItemName (Graphics& g, ProcessorListItem* item)
 
         if (item == hoverItem)
         {
-            maxWidth = Font (listFontPlain).getStringWidthFloat (name);
+            maxWidth = GlyphArrangement::getStringWidth (Font (listFontPlain), name);
 
             if (maxWidth + 25 < getWidth() - scrollbarOffset)
             {
@@ -457,12 +457,15 @@ void ProcessorList::mouseDrag (const MouseEvent& e)
 
                         LOGA ("Processor List - ", listItem->getName(), " drag start.");
 
-                        Graphics g (dragImage.getImage());
-                        g.setColour (getLookAndFeel().findColour (listItem->colourId));
-                        g.fillAll();
-                        g.setColour (Colours::white);
-                        g.setFont (FontOptions (14.0f));
-                        g.drawSingleLineText (listItem->getName(), 10, 12);
+                        // Draw the drag image
+                        {
+                            Graphics g (dragImage.getImage());
+                            g.setColour (getLookAndFeel().findColour (listItem->colourId));
+                            g.fillAll();
+                            g.setColour (Colours::white);
+                            g.setFont (FontOptions (14.0f));
+                            g.drawSingleLineText (listItem->getName(), 10, 12);
+                        }
 
                         dragImage.getImage().multiplyAllAlphas (0.6f);
 

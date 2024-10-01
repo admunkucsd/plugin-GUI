@@ -84,7 +84,11 @@ PluginInstaller::PluginInstaller (bool loadComponents)
     if (loadComponents)
     {
         setSize (910, 480);
-        setUsingNativeTitleBar (true);
+#ifdef JUCE_WINDOWS
+        setUsingNativeTitleBar (false);
+#else
+        setUsingNativeTitleBar (true); // Use native title bar on Mac and Linux
+#endif
         setContentOwned (new PluginInstallerComponent(), false);
         setVisible (true);
         setResizable (true, false); // useBottomCornerRisizer -- doesn't work very well
@@ -667,7 +671,7 @@ void PluginListBoxComponent::run()
             label = pluginData[i].getProperty ("type", "NULL").toString();
             dispName = pluginData[i].getProperty ("display_name", "NULL").toString();
             
-            pluginTextWidth = Font ( listFont ).getStringWidth (dispName);
+            pluginTextWidth = GlyphArrangement::getStringWidthInt (Font (listFont), dispName);
             if (pluginTextWidth > maxTextWidth)
                 maxTextWidth = pluginTextWidth;
 
